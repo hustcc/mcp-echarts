@@ -14,7 +14,7 @@
   "bin": {
     "mcp-echarts": "./build/index.js"
   },
-  "files": ["build", "public"],
+  "files": ["build", "fonts"],
   "keywords": ["mcp", "echarts", "visualization", "chart", "mcp-echarts"],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",

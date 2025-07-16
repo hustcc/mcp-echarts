@@ -7,9 +7,8 @@ const fontPath = path.join(
   __dirname,
   "..",
   "..",
-  "public",
   "fonts",
-  "SourceHanSansSC-VF.otf",
+  "AlibabaPuHuiTi-3-55-Regular.otf",
 );
 
 GlobalFonts.registerFromPath(fontPath, "sans-serif");
