@@ -14,11 +14,11 @@
   "bin": {
     "mcp-echarts": "./build/index.js"
   },
-  "files": ["build"],
+  "files": ["build", "public"],
   "keywords": ["mcp", "echarts", "visualization", "chart", "mcp-echarts"],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
-    "canvas": "3.1.2",
+    "@napi-rs/canvas": "^0.1.73",
     "echarts": "^5.6.0",
     "zod": "^3.25.16"
   },

@@ -1,6 +1,18 @@
-import { createCanvas } from "canvas";
+import path from "node:path";
+import { GlobalFonts, createCanvas } from "@napi-rs/canvas";
 import * as echarts from "echarts";
 import type { EChartsOption } from "echarts";
+
+const fontPath = path.join(
+  __dirname,
+  "..",
+  "..",
+  "public",
+  "fonts",
+  "SourceHanSansSC-VF.otf",
+);
+
+GlobalFonts.registerFromPath(fontPath, "sans-serif");
 
 export function renderECharts(
   echartsOption: EChartsOption,
