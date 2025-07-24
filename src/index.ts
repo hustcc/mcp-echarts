@@ -2,7 +2,7 @@
 import process from "node:process";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { generateEChartsTool } from "./tools";
+import { tools } from "./tools";
 
 /**
  * MCP Server for ECharts.
@@ -21,9 +21,11 @@ class MCPServerECharts {
       version: "0.1.0",
     });
 
-    const { name, description, inputSchema, run } = generateEChartsTool;
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    this.server.tool(name, description, inputSchema.shape, run as any);
+    for (const tool of tools) {
+      const { name, description, inputSchema, run } = tool;
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      this.server.tool(name, description, inputSchema.shape, run as any);
+    }
   }
 
   async runWithStdio(): Promise<void> {
