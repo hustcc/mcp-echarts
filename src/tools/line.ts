@@ -1,33 +1,39 @@
-import type { EChartsOption } from "echarts";
+import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
 import { renderECharts } from "../utils/render";
 import {
-  CategoryFieldSchema,
-  DataSchema,
+  AxisXTitleSchema,
+  AxisYTitleSchema,
   HeightSchema,
-  SeriesFieldSchema,
+  ThemeSchema,
   TitleSchema,
-  ValueFieldSchema,
   WidthSchema,
 } from "../utils/schema";
+
+// Line chart data schema
+const data = z.object({
+  group: z
+    .string()
+    .optional()
+    .describe("Group name for multiple series, required when stack is enabled"),
+  time: z.string(),
+  value: z.number(),
+});
 
 export const generateLineChartTool = {
   name: "generate_line_chart",
   description:
-    "Generate a line chart based on structured data. Use this tool to display trends over a continuous interval or time.",
+    "Generate a line chart to show trends over time, such as, the ratio of Apple computer sales to Apple's profits changed from 2000 to 2016.",
   inputSchema: z.object({
-    data: DataSchema,
-    categoryField: CategoryFieldSchema,
-    valueField: ValueFieldSchema,
-    seriesField: SeriesFieldSchema,
-    title: TitleSchema,
-    width: WidthSchema,
+    axisXTitle: AxisXTitleSchema,
+    axisYTitle: AxisYTitleSchema,
+    data: z
+      .array(data)
+      .describe(
+        "Data for line chart, such as, [{ time: '2015', value: 23 }, { time: '2016', value: 32 }]. For multiple series: [{ group: 'Series A', time: '2015', value: 23 }, { group: 'Series B', time: '2015', value: 18 }].",
+      )
+      .nonempty({ message: "Line chart data cannot be empty." }),
     height: HeightSchema,
-    smooth: z
-      .boolean()
-      .optional()
-      .default(false)
-      .describe("Whether to use a smooth curve. Default is false."),
     showArea: z
       .boolean()
       .optional()
@@ -38,114 +44,150 @@ export const generateLineChartTool = {
       .optional()
       .default(true)
       .describe("Whether to show symbols on data points. Default is true."),
-    stack: z
-      .string()
+    smooth: z
+      .boolean()
       .optional()
+      .default(false)
+      .describe("Whether to use a smooth curve. Default is false."),
+    stack: z
+      .boolean()
+      .optional()
+      .default(false)
       .describe(
-        "Stack identifier. Lines with the same stack identifier will be stacked.",
+        "Whether stacking is enabled. When enabled, line charts require a 'group' field in the data.",
       ),
+    theme: ThemeSchema,
+    title: TitleSchema,
+    width: WidthSchema,
   }),
   run: (params: {
-    data: z.infer<typeof DataSchema>;
-    categoryField: string;
-    valueField: string;
-    seriesField?: string;
-    title?: string;
-    width: number;
+    axisXTitle?: string;
+    axisYTitle?: string;
+    data: Array<{ time: string; value: number; group?: string }>;
     height: number;
-    smooth?: boolean;
     showArea?: boolean;
     showSymbol?: boolean;
-    stack?: string;
+    smooth?: boolean;
+    stack?: boolean;
+    theme?: "default" | "dark";
+    title?: string;
+    width: number;
   }) => {
     const {
+      axisXTitle,
+      axisYTitle,
       data,
-      categoryField,
-      valueField,
-      seriesField,
-      title,
-      width,
       height,
-      smooth,
       showArea,
       showSymbol,
+      smooth,
       stack,
+      theme,
+      title,
+      width,
     } = params;
 
-    const categories = [...new Set(data.map((item) => item[categoryField]))];
-    const seriesData: EChartsOption["series"] = [];
-    let legendData: string[] = [];
+    // Check if data has group field for multiple series
+    const hasGroups = data.some((item) => item.group);
 
-    if (seriesField) {
-      // Multi-series chart
-      legendData = [
-        ...new Set(data.map((item) => item[seriesField])),
-      ] as string[];
-      for (const seriesName of legendData) {
-        const seriesValues = categories.map((category) => {
-          const item = data.find(
-            (d) =>
-              d[categoryField] === category && d[seriesField] === seriesName,
-          );
-          return item ? item[valueField] : null;
-        });
+    let series: Array<SeriesOption> = [];
+    let categories: string[] = [];
 
-        seriesData.push({
-          name: seriesName,
-          type: "line",
-          data: seriesValues,
-          smooth,
-          showSymbol,
-          areaStyle: showArea ? {} : undefined,
-          stack,
-        });
+    if (hasGroups) {
+      // Handle multiple series data
+      const groupMap = new Map<
+        string,
+        Array<{ time: string; value: number }>
+      >();
+      const timeSet = new Set<string>();
+
+      // Group data by group field and collect all time points
+      for (const item of data) {
+        const groupName = item.group || "Default";
+        if (!groupMap.has(groupName)) {
+          groupMap.set(groupName, []);
+        }
+        const groupData = groupMap.get(groupName);
+        if (groupData) {
+          groupData.push({ time: item.time, value: item.value });
+        }
+        timeSet.add(item.time);
       }
+
+      // Sort time points
+      categories = Array.from(timeSet).sort();
+
+      // Create series for each group
+      groupMap.forEach((groupData, groupName) => {
+        // Create a map for quick lookup
+        const dataMap = new Map(groupData.map((d) => [d.time, d.value]));
+
+        // Fill values for all time points (null for missing data)
+        const values = categories.map((time) => dataMap.get(time) ?? null);
+
+        series.push({
+          areaStyle: showArea ? {} : undefined,
+          connectNulls: false,
+          data: values,
+          name: groupName,
+          showSymbol,
+          smooth,
+          stack: stack ? "Total" : undefined,
+          type: "line",
+        });
+      });
     } else {
-      // Single-series chart
-      const seriesValues = categories.map((category) => {
-        const item = data.find((d) => d[categoryField] === category);
-        return item ? item[valueField] : null;
-      });
-      seriesData.push({
-        type: "line",
-        data: seriesValues,
-        smooth,
-        showSymbol,
-        areaStyle: showArea ? {} : undefined,
-        stack,
-      });
+      // Handle single series data
+      categories = data.map((item) => item.time);
+      const values = data.map((item) => item.value);
+
+      series = [
+        {
+          areaStyle: showArea ? {} : undefined,
+          data: values,
+          showSymbol,
+          smooth,
+          stack: stack ? "Total" : undefined,
+          type: "line",
+        },
+      ];
     }
 
     const echartsOption: EChartsOption = {
+      legend: hasGroups
+        ? {
+            left: "center",
+            orient: "horizontal",
+            top: "top",
+          }
+        : undefined,
+      series,
       title: {
-        text: title,
         left: "center",
+        text: title,
       },
       tooltip: {
         trigger: "axis",
       },
-      legend: {
-        data: legendData,
-        bottom: 10,
-      },
       xAxis: {
-        type: "category",
-        data: categories,
         boundaryGap: false,
+        data: categories,
+        name: axisXTitle,
+        type: "category",
       },
       yAxis: {
+        name: axisYTitle,
         type: "value",
       },
-      series: seriesData,
     };
 
-    const imageBase64 = renderECharts(echartsOption, width, height);
+    const imageBase64 = renderECharts(echartsOption, width, height, theme);
     return {
       content: [
         {
-          type: "image",
           data: imageBase64,
           mimeType: "image/png",
+          type: "image",
         },
       ],
     };
