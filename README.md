@@ -2,6 +2,10 @@
 
 Generate <img src="https://echarts.apache.org/zh/images/favicon.png" height="14"/> [Apache ECharts](https://echarts.apache.org/) diagram and chart with AI MCP dynamically. Using for chart generation and data analysis.
 
+<a href="https://glama.ai/mcp/servers/@hustcc/mcp-echarts">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@hustcc/mcp-echarts/badge" alt="ECharts MCP server" />
+</a>
+
 <div align="center">
   <img width="648" alt="mcp-echarts" src="https://mdn.alipayobjects.com/huamei_1gdzij/afts/img/A*s3w3SpMMPDQAAAAARzAAAAgAemB7AQ/original" />
 </div>
