@@ -14,6 +14,7 @@ Generate <img src="https://echarts.apache.org/zh/images/favicon.png" height="14"
 
 - Fully support all features and syntax of `ECharts`, include data, style, theme and so on.
 - Support exporting to `png`, `svg`, and `option` formats, with validation for `ECharts` to facilitate the model's multi-round output of correct syntax and graphics.
+- **MinIO Integration**: Store charts in MinIO object storage and return URLs instead of Base64 data for better performance and sharing capabilities.
 - Lightweight, we can install it with `zero dependence`.
 - Extremely `secure`, fully generated locally, without relying on any remote services.
 
@@ -55,6 +56,51 @@ On Window system:
 ```
 
 Also, you can use it on aliyun, modelscope, glama.ai, smithery.ai or others with HTTP, SSE Protocol.
+
+## 🗂️ MinIO Configuration (Optional)
+
+For better performance and sharing capabilities, you can configure MinIO object storage to store chart images as URLs instead of Base64 data.
+
+### Setup MinIO
+
+1. **Install and start MinIO locally:**
+   ```bash
+   # Download MinIO (macOS example)
+   brew install minio/stable/minio
+   
+   # Start MinIO server
+   minio server ~/minio-data --console-address :9001
+   ```
+
+2. **Configure environment variables:**
+   ```bash
+   # Copy the example environment file
+   cp .env.example .env
+   
+   # Edit .env with your MinIO settings
+   MINIO_ENDPOINT=localhost
+   MINIO_PORT=9000
+   MINIO_USE_SSL=false
+   MINIO_ACCESS_KEY=minioadmin
+   MINIO_SECRET_KEY=minioadmin
+   MINIO_BUCKET_NAME=mcp-echarts
+   ```
+
+3. **Test the connection:**
+   ```bash
+   node test-minio.js
+   ```
+
+### Benefits of MinIO Integration
+
+- ✅ **Reduced token usage** - URLs are much shorter than Base64 data
+- ✅ **Permanent accessibility** - Charts remain available long-term
+- ✅ **Easy sharing** - Send URLs to others to view charts
+- ✅ **Better UX** - Most MCP clients handle URLs better than Base64
+
+### Fallback Behavior
+
+If MinIO is not configured or unavailable, the system automatically falls back to Base64 data output, ensuring compatibility.
 
 
 ## 🔨 Development

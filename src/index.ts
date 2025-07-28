@@ -2,7 +2,12 @@
 import process from "node:process";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { config } from "dotenv";
 import { tools } from "./tools";
+
+// Load environment variables from .env file (completely silent to avoid stdout contamination)
+process.env.DOTENV_CONFIG_QUIET = "true";
+config({ override: false, debug: false });
 
 /**
  * MCP Server for ECharts.
@@ -65,6 +70,6 @@ async function main(): Promise<void> {
 
 // Start application
 main().catch((error) => {
-  console.error("Failed to start application:", error);
+  // Don't use console.error in MCP servers as it interferes with JSON protocol
   process.exit(1);
 });

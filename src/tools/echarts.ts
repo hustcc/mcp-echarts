@@ -1,10 +1,30 @@
 import { z } from "zod";
-import { renderECharts } from "../utils";
+import { generateChartImageForTool } from "../utils";
 
 function isValidEChartsOption(option: string): boolean {
   try {
     const parsedOption = JSON.parse(option);
-    return typeof parsedOption === "object" && parsedOption !== null;
+    if (typeof parsedOption !== "object" || parsedOption === null) {
+      return false;
+    }
+
+    // Basic validation for common chart types that require axes
+    if (parsedOption.series && Array.isArray(parsedOption.series)) {
+      const hasCartesianSeries = parsedOption.series.some(
+        (series: { type?: string }) =>
+          series.type && ["bar", "line", "scatter"].includes(series.type),
+      );
+
+      // If chart has cartesian series, it should have proper axis configuration
+      if (hasCartesianSeries && !parsedOption.xAxis && !parsedOption.yAxis) {
+        console.error(
+          "[DEBUG] Chart validation failed: Cartesian chart missing axis configuration",
+        );
+        return false;
+      }
+    }
+
+    return true;
   } catch {
     return false;
   }
@@ -46,11 +66,21 @@ ATTENTION: A valid ECharts option must be a valid JSON string, and cannot be emp
       }),
     width: z
       .number()
+      .min(
+        50,
+        "Width must be at least 50 pixels to ensure proper chart rendering",
+      )
+      .max(5000, "Width cannot exceed 5000 pixels")
       .describe("The width of the ECharts in pixels. Default is 800.")
       .optional()
       .default(800),
     height: z
       .number()
+      .min(
+        50,
+        "Height must be at least 50 pixels to ensure proper chart rendering",
+      )
+      .max(5000, "Height cannot exceed 5000 pixels")
       .describe("The height of the ECharts in pixels. Default is 600.")
       .optional()
       .default(600),
@@ -67,7 +97,7 @@ ATTENTION: A valid ECharts option must be a valid JSON string, and cannot be emp
       .optional()
       .default("png"),
   }),
-  run: (params: {
+  run: async (params: {
     echartsOption: string;
     width?: number;
     height?: number;
@@ -75,6 +105,17 @@ ATTENTION: A valid ECharts option must be a valid JSON string, and cannot be emp
     outputType?: "png" | "svg" | "option";
   }) => {
     const { width, height, echartsOption, theme, outputType } = params;
+
+    // Debug logging (writes to stderr, won't interfere with MCP protocol)
+    if (process.env.DEBUG_MCP_ECHARTS) {
+      console.error("[DEBUG] ECharts tool called with params:", {
+        echartsOptionLength: echartsOption?.length,
+        width,
+        height,
+        theme,
+        outputType,
+      });
+    }
 
     if (!isValidEChartsOption(echartsOption)) {
       throw new Error(
@@ -84,23 +125,14 @@ ATTENTION: A valid ECharts option must be a valid JSON string, and cannot be emp
 
     const option = JSON.parse(echartsOption);
 
-    const r = renderECharts(option, width, height, theme, outputType);
-
-    const isImage = outputType !== "svg" && outputType !== "option";
-
-    const result = isImage
-      ? {
-          type: "image",
-          data: r,
-          mimeType: "image/png",
-        }
-      : {
-          type: "text",
-          text: r,
-        };
-
-    return {
-      content: [result],
-    };
+    // Use the unified image generation method
+    return await generateChartImageForTool(
+      option,
+      width,
+      height,
+      theme,
+      outputType,
+      "generate_echarts",
+    );
   },
 };

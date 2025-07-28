@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { renderECharts } from "../utils/render";
+import { generateChartImageForTool } from "../utils";
 import {
   HeightSchema,
   ThemeSchema,
@@ -120,15 +120,13 @@ export const generateTreemapChartTool = {
       },
     };
 
-    const imageBase64 = renderECharts(echartsOption, width, height, theme);
-    return {
-      content: [
-        {
-          data: imageBase64,
-          mimeType: "image/png",
-          type: "image",
-        },
-      ],
-    };
+    return generateChartImageForTool(
+      echartsOption,
+      width,
+      height,
+      theme,
+      "png",
+      "generatetreemap_chart",
+    );
   },
 };

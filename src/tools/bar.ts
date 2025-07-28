@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { renderECharts } from "../utils/render";
+import { generateChartImageForTool } from "../utils";
 import {
   AxisXTitleSchema,
   AxisYTitleSchema,
@@ -55,7 +55,7 @@ export const generateBarChartTool = {
     title: TitleSchema,
     width: WidthSchema,
   }),
-  run: (params: {
+  run: async (params: {
     axisXTitle?: string;
     axisYTitle?: string;
     data: Array<{ category: string; value: number; group?: string }>;
@@ -164,15 +164,13 @@ export const generateBarChartTool = {
       },
     };
 
-    const imageBase64 = renderECharts(echartsOption, width, height, theme);
-    return {
-      content: [
-        {
-          data: imageBase64,
-          mimeType: "image/png",
-          type: "image",
-        },
-      ],
-    };
+    return await generateChartImageForTool(
+      echartsOption,
+      width,
+      height,
+      theme,
+      "png",
+      "generate_bar_chart",
+    );
   },
 };

@@ -31,3 +31,11 @@ coverage
 package-lock.json
 pnpm-lock.yaml
 bun.lock
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Test files
+test-*.js

@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { renderECharts } from "../utils/render";
+import { generateChartImageForTool } from "../utils";
 import {
   AxisXTitleSchema,
   AxisYTitleSchema,
@@ -181,15 +181,13 @@ export const generateBoxplotChartTool = {
       return [min, Q1, median, Q3, max];
     }
 
-    const imageBase64 = renderECharts(echartsOption, width, height, theme);
-    return {
-      content: [
-        {
-          data: imageBase64,
-          mimeType: "image/png",
-          type: "image",
-        },
-      ],
-    };
+    return generateChartImageForTool(
+      echartsOption,
+      width,
+      height,
+      theme,
+      "png",
+      "generateboxplot_chart",
+    );
   },
 };
