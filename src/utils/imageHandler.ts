@@ -69,12 +69,12 @@ export async function generateChartImage(
   const isUrl = result.startsWith("http");
 
   if (isUrl) {
-    // MinIO URL，返回HTML img标签
+    // MinIO URL，返回文件地址
     return {
       content: [
         {
           type: "text",
-          text: `<img src="${result}" alt="Generated Chart" style="max-width: 100%; height: auto;" />`,
+          text: `Chart image is available at: ${result}`,
         },
       ],
     };
@@ -155,7 +155,9 @@ export async function generateChartImageForTool(
     }
 
     throw new Error(
-      `Chart rendering failed: ${error instanceof Error ? error.message : String(error)}`,
+      `Chart rendering failed: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
     );
   }
 }
