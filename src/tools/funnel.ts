@@ -10,7 +10,9 @@ import {
 
 // Funnel chart data schema
 const data = z.object({
-  category: z.string().describe("Stage category name, such as '浏览网站'."),
+  category: z
+    .string()
+    .describe("Stage category name, such as 'Browse Website'."),
   value: z.number().describe("Value at this stage, such as 50000."),
 });
 
@@ -22,7 +24,7 @@ export const generateFunnelChartTool = {
     data: z
       .array(data)
       .describe(
-        "Data for funnel chart, such as, [{ category: '浏览网站', value: 50000 }, { category: '放入购物车', value: 35000 }, { category: '生成订单', value: 25000 }].",
+        "Data for funnel chart, such as, [{ category: 'Browse Website', value: 50000 }, { category: 'Add to Cart', value: 35000 }, { category: 'Generate Order', value: 25000 }].",
       )
       .nonempty({ message: "Funnel chart data cannot be empty." }),
     height: HeightSchema,

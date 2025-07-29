@@ -1,0 +1,62 @@
+{
+  "name": "generate_gauge_chart",
+  "description": "Generate a gauge chart to display single indicator's current status, such as, CPU usage rate, completion progress, or performance scores.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Indicator name, such as 'CPU Usage'."
+            },
+            "value": {
+              "type": "number",
+              "description": "Current value of the indicator, such as 75."
+            }
+          },
+          "required": ["name", "value"]
+        },
+        "minItems": 1,
+        "description": "Data for gauge chart, such as, [{ name: 'CPU Usage', value: 75 }]. Multiple gauges can be displayed."
+      },
+      "height": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 600,
+        "description": "Set the height of the chart, default is 600px."
+      },
+      "max": {
+        "type": "number",
+        "default": 100,
+        "description": "Maximum value of the gauge, default is 100."
+      },
+      "min": {
+        "type": "number",
+        "default": 0,
+        "description": "Minimum value of the gauge, default is 0."
+      },
+      "theme": {
+        "type": "string",
+        "enum": ["default", "dark"],
+        "default": "default",
+        "description": "Set the theme for the chart, optional, default is 'default'."
+      },
+      "title": {
+        "type": "string",
+        "description": "Set the title of the chart."
+      },
+      "width": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 800,
+        "description": "Set the width of the chart, default is 800px."
+      }
+    },
+    "required": ["data"],
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

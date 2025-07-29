@@ -36,7 +36,7 @@ export const tools = [
   generateTreeChartTool,
 ];
 
-// 重新导出各个工具，方便测试和其他地方使用
+// Re-export individual tools for convenient use in tests and other places
 export {
   generateEChartsTool,
   generateLineChartTool,

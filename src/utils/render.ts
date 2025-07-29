@@ -40,15 +40,15 @@ export async function renderECharts(
     // Output string
     const svgStr = chart.renderToSVGString();
 
-    // If chart is no longer needed, call dispose to free memory
+    // If the chart is no longer needed, call dispose to free memory
     chart.dispose();
-    // Return SVG string or validated ECharts configuration
+    // Return SVG string or validated ECharts configuration options
     return outputType === "svg"
       ? svgStr
       : JSON.stringify(echartsOption, null, 2);
   }
 
-  // Other output types (like PNG) require Canvas
+  // Other output types (such as PNG) need to use Canvas
   const canvas = createCanvas(width, height) as unknown as HTMLCanvasElement;
   const chart = echarts.init(canvas, theme, {
     devicePixelRatio: 3,

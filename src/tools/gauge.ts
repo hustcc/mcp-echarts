@@ -10,7 +10,7 @@ import {
 
 // Gauge chart data schema
 const data = z.object({
-  name: z.string().describe("Indicator name, such as 'CPU使用率'."),
+  name: z.string().describe("Indicator name, such as 'CPU Usage'."),
   value: z.number().describe("Current value of the indicator, such as 75."),
 });
 
@@ -22,7 +22,7 @@ export const generateGaugeChartTool = {
     data: z
       .array(data)
       .describe(
-        "Data for gauge chart, such as, [{ name: 'CPU使用率', value: 75 }]. Multiple gauges can be displayed.",
+        "Data for gauge chart, such as, [{ name: 'CPU Usage', value: 75 }]. Multiple gauges can be displayed.",
       )
       .nonempty({ message: "Gauge chart data cannot be empty." }),
     height: HeightSchema,

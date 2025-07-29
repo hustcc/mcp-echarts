@@ -1,0 +1,73 @@
+{
+  "name": "generate_candlestick_chart",
+  "description": "Generate a candlestick chart for financial data visualization, such as, stock prices, cryptocurrency prices, or other OHLC (Open-High-Low-Close) data.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "description": "Date string, such as '2023-01-01'."
+            },
+            "open": {
+              "type": "number",
+              "description": "Opening price."
+            },
+            "high": {
+              "type": "number",
+              "description": "Highest price."
+            },
+            "low": {
+              "type": "number",
+              "description": "Lowest price."
+            },
+            "close": {
+              "type": "number",
+              "description": "Closing price."
+            },
+            "volume": {
+              "type": "number",
+              "description": "Trading volume (optional)."
+            }
+          },
+          "required": ["date", "open", "high", "low", "close"]
+        },
+        "minItems": 1,
+        "description": "Data for candlestick chart, such as, [{ date: '2023-01-01', open: 100, high: 110, low: 95, close: 105, volume: 10000 }]."
+      },
+      "height": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 600,
+        "description": "Set the height of the chart, default is 600px."
+      },
+      "showVolume": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to show volume chart below candlestick. Default is false."
+      },
+      "theme": {
+        "type": "string",
+        "enum": ["default", "dark"],
+        "default": "default",
+        "description": "Set the theme for the chart, optional, default is 'default'."
+      },
+      "title": {
+        "type": "string",
+        "description": "Set the title of the chart."
+      },
+      "width": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 800,
+        "description": "Set the width of the chart, default is 800px."
+      }
+    },
+    "required": ["data"],
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

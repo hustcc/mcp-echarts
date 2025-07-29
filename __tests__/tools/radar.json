@@ -1,0 +1,56 @@
+{
+  "name": "generate_radar_chart",
+  "description": "Generate a radar chart to display multidimensional data (four dimensions or more), such as, evaluate Huawei and Apple phones in terms of five dimensions: ease of use, functionality, camera, benchmark scores, and battery life.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Dimension name, such as 'Design'."
+            },
+            "value": {
+              "type": "number",
+              "description": "Value of the dimension, such as 70."
+            },
+            "group": {
+              "type": "string",
+              "description": "Group name for multiple series, used for comparing different entities"
+            }
+          },
+          "required": ["name", "value"]
+        },
+        "minItems": 1,
+        "description": "Data for radar chart, such as, [{ name: 'Design', value: 70 }, { name: 'Performance', value: 85 }] or [{ name: 'Design', value: 70, group: 'iPhone' }]."
+      },
+      "height": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 600,
+        "description": "Set the height of the chart, default is 600px."
+      },
+      "theme": {
+        "type": "string",
+        "enum": ["default", "dark"],
+        "default": "default",
+        "description": "Set the theme for the chart, optional, default is 'default'."
+      },
+      "title": {
+        "type": "string",
+        "description": "Set the title of the chart."
+      },
+      "width": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 800,
+        "description": "Set the width of the chart, default is 800px."
+      }
+    },
+    "required": ["data"],
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

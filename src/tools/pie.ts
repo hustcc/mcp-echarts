@@ -12,7 +12,7 @@ import {
 const data = z.object({
   category: z
     .string()
-    .describe("Category of the data point, such as '分类一'."),
+    .describe("Category of the data point, such as 'Category A'."),
   value: z.number().describe("Value of the data point, such as 27."),
 });
 
@@ -24,7 +24,7 @@ export const generatePieChartTool = {
     data: z
       .array(data)
       .describe(
-        "Data for pie chart, such as, [{ category: '分类一', value: 27 }, { category: '分类二', value: 25 }].",
+        "Data for pie chart, such as, [{ category: 'Category A', value: 27 }, { category: 'Category B', value: 25 }].",
       )
       .nonempty({ message: "Pie chart data cannot be empty." }),
     height: HeightSchema,

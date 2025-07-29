@@ -1,0 +1,59 @@
+{
+  "name": "generate_sunburst_chart",
+  "description": "Generate a sunburst chart to display multi-level hierarchical data, such as, organizational structure, file system hierarchy, or category breakdown.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Node name, such as 'Technology'."
+            },
+            "value": {
+              "type": "number",
+              "description": "Node value, such as 100."
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/properties/data/items"
+              },
+              "description": "Child nodes for hierarchical structure."
+            }
+          },
+          "required": ["name", "value"]
+        },
+        "minItems": 1,
+        "description": "Data for sunburst chart, such as, [{ name: 'Technology', value: 100, children: [{ name: 'Frontend', value: 60, children: [{ name: 'React', value: 30 }] }] }]."
+      },
+      "height": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 600,
+        "description": "Set the height of the chart, default is 600px."
+      },
+      "theme": {
+        "type": "string",
+        "enum": ["default", "dark"],
+        "default": "default",
+        "description": "Set the theme for the chart, optional, default is 'default'."
+      },
+      "title": {
+        "type": "string",
+        "description": "Set the title of the chart."
+      },
+      "width": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 800,
+        "description": "Set the width of the chart, default is 800px."
+      }
+    },
+    "required": ["data"],
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

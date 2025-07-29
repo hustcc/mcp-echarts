@@ -97,7 +97,7 @@ export const generateCandlestickChartTool = {
     // Add volume series if requested
     if (showVolume && volumeData.some((v) => v > 0)) {
       series.push({
-        name: "成交量",
+        name: "Volume",
         type: "bar",
         xAxisIndex: 1,
         yAxisIndex: 1,
@@ -118,7 +118,7 @@ export const generateCandlestickChartTool = {
       legend: {
         bottom: 10,
         left: "center",
-        data: showVolume ? ["K线", "成交量"] : ["K线"],
+        data: showVolume ? ["Candlestick", "Volume"] : ["Candlestick"],
       },
       tooltip: {
         trigger: "axis",

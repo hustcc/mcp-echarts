@@ -1,0 +1,38 @@
+{
+  "name": "generate_echarts",
+  "description": "Generate visual charts using Apache ECharts with echarts option and configuration dynamically. Apache ECharts is an Open Source JavaScript Visualization Library, which is used to create interactive charts and visualizations in web applications. It supports a wide range of chart types, including line charts, bar charts, pie charts, scatter plots, and more. ECharts is highly customizable and can be integrated with various data sources to create dynamic visualizations.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "echartsOption": {
+        "type": "string",
+        "minLength": 1,
+        "description": "ECharts option and configuration used to generate charts. For example:\n{\n  \"title\": {\n    \"text\": \"ECharts Entry Example\",\n    \"left\": \"center\",\n    \"top\": \"2%\"\n  },\n  \"tooltip\": {},\n  \"xAxis\": {\n    \"data\": [\"shirt\", \"cardigan\", \"chiffon\", \"pants\", \"heels\", \"socks\"]\n  },\n  \"yAxis\": {},\n  \"series\": [{\n    \"name\": \"Sales\",\n    \"type\": \"bar\",\n    \"data\": [5, 20, 36, 10, 10, 20]\n  }]\n}\n\nATTENTION: A valid ECharts option must be a valid JSON string, and cannot be empty.\n"
+      },
+      "width": {
+        "type": "number",
+        "description": "The width of the ECharts in pixels. Default is 800.",
+        "default": 800
+      },
+      "height": {
+        "type": "number",
+        "description": "The height of the ECharts in pixels. Default is 600.",
+        "default": 600
+      },
+      "theme": {
+        "type": "string",
+        "enum": ["default", "dark"],
+        "description": "ECharts theme, optional. Default is 'default'.",
+        "default": "default"
+      },
+      "outputType": {
+        "type": "string",
+        "enum": ["png", "svg", "option"],
+        "description": "The output type of the diagram. Can be 'png', 'svg' or 'option'. Default is 'png', 'png' will return the rendered PNG image, 'svg' will return the rendered SVG string, and 'option' will return the valid ECharts option.",
+        "default": "png"
+      }
+    },
+    "required": ["echartsOption"],
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

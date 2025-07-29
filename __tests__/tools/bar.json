@@ -1,0 +1,76 @@
+{
+  "name": "generate_bar_chart",
+  "description": "Generate a bar chart to show data for numerical comparisons among different categories, such as, comparing categorical data and for horizontal comparisons.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "axisXTitle": {
+        "type": "string",
+        "default": "",
+        "description": "Set the x-axis title of chart."
+      },
+      "axisYTitle": {
+        "type": "string",
+        "default": "",
+        "description": "Set the y-axis title of chart."
+      },
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string",
+              "description": "Category of the data point, such as 'Category A'."
+            },
+            "value": {
+              "type": "number",
+              "description": "Value of the data point, such as 10."
+            },
+            "group": {
+              "type": "string",
+              "description": "Group name for multiple series, used for grouping or stacking"
+            }
+          },
+          "required": ["category", "value"]
+        },
+        "minItems": 1,
+        "description": "Data for bar chart, such as, [{ category: 'Category A', value: 10 }, { category: 'Category B', value: 20 }] or [{ category: 'Category A', value: 10, group: 'Group A' }]."
+      },
+      "height": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 600,
+        "description": "Set the height of the chart, default is 600px."
+      },
+      "group": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether grouping is enabled. When enabled, bar charts require a 'group' field in the data. When `group` is true, `stack` should be false."
+      },
+      "stack": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether stacking is enabled. When enabled, bar charts require a 'group' field in the data. When `stack` is true, `group` should be false."
+      },
+      "theme": {
+        "type": "string",
+        "enum": ["default", "dark"],
+        "default": "default",
+        "description": "Set the theme for the chart, optional, default is 'default'."
+      },
+      "title": {
+        "type": "string",
+        "description": "Set the title of the chart."
+      },
+      "width": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 800,
+        "description": "Set the width of the chart, default is 800px."
+      }
+    },
+    "required": ["data"],
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

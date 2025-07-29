@@ -14,7 +14,7 @@ import {
 const data = z.object({
   category: z
     .string()
-    .describe("Category of the data point, such as '分类一'."),
+    .describe("Category of the data point, such as 'Category A'."),
   value: z.number().describe("Value of the data point, such as 10."),
   group: z
     .string()
@@ -32,7 +32,7 @@ export const generateBarChartTool = {
     data: z
       .array(data)
       .describe(
-        "Data for bar chart, such as, [{ category: '分类一', value: 10 }, { category: '分类二', value: 20 }] or [{ category: '分类一', value: 10, group: '组别一' }].",
+        "Data for bar chart, such as, [{ category: 'Category A', value: 10 }, { category: 'Category B', value: 20 }] or [{ category: 'Category A', value: 10, group: 'Group A' }].",
       )
       .nonempty({ message: "Bar chart data cannot be empty." }),
     height: HeightSchema,

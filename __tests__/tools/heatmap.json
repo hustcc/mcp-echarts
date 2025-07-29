@@ -1,0 +1,66 @@
+{
+  "name": "generate_heatmap_chart",
+  "description": "Generate a heatmap chart to display data density or intensity distribution, such as, user activity patterns by time and day, or correlation matrix.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "axisXTitle": {
+        "type": "string",
+        "default": "",
+        "description": "Set the x-axis title of chart."
+      },
+      "axisYTitle": {
+        "type": "string",
+        "default": "",
+        "description": "Set the y-axis title of chart."
+      },
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": ["string", "number"],
+              "description": "X axis value, such as 'Mon' or 0."
+            },
+            "y": {
+              "type": ["string", "number"],
+              "description": "Y axis value, such as 'AM' or 0."
+            },
+            "value": {
+              "type": "number",
+              "description": "Heat value at this position, such as 5."
+            }
+          },
+          "required": ["x", "y", "value"]
+        },
+        "minItems": 1,
+        "description": "Data for heatmap chart, such as, [{ x: 'Mon', y: '12AM', value: 5 }, { x: 'Tue', y: '1AM', value: 3 }]."
+      },
+      "height": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 600,
+        "description": "Set the height of the chart, default is 600px."
+      },
+      "theme": {
+        "type": "string",
+        "enum": ["default", "dark"],
+        "default": "default",
+        "description": "Set the theme for the chart, optional, default is 'default'."
+      },
+      "title": {
+        "type": "string",
+        "description": "Set the title of the chart."
+      },
+      "width": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 800,
+        "description": "Set the width of the chart, default is 800px."
+      }
+    },
+    "required": ["data"],
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

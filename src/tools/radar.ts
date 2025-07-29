@@ -56,7 +56,7 @@ export const generateRadarChartTool = {
     const dimensions = Array.from(dimensionSet).sort();
 
     // Create radar indicator configuration
-    // 计算所有维度的最大值，然后统一使用同一个max值来避免alignTicks警告
+    // Calculate the maximum value for all dimensions, then use the same max value to avoid alignTicks warning
     const allValues = data.map((item) => item.value);
     const globalMaxValue = Math.max(...allValues);
     const unifiedMax = Math.ceil((globalMaxValue * 1.2) / 10) * 10;
@@ -121,7 +121,7 @@ export const generateRadarChartTool = {
           data: [
             {
               value: values,
-              name: title || "数据",
+              name: title || "Data",
             },
           ],
           type: "radar",

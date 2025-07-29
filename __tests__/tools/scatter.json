@@ -1,0 +1,62 @@
+{
+  "name": "generate_scatter_chart",
+  "description": "Generate a scatter chart to show the relationship between two variables, helps discover their relationship or trends, such as, the strength of correlation, data distribution patterns.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "axisXTitle": {
+        "type": "string",
+        "default": "",
+        "description": "Set the x-axis title of chart."
+      },
+      "axisYTitle": {
+        "type": "string",
+        "default": "",
+        "description": "Set the y-axis title of chart."
+      },
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "X coordinate value of the data point."
+            },
+            "y": {
+              "type": "number",
+              "description": "Y coordinate value of the data point."
+            }
+          },
+          "required": ["x", "y"]
+        },
+        "minItems": 1,
+        "description": "Data for scatter chart, such as, [{ x: 10, y: 15 }, { x: 20, y: 25 }]."
+      },
+      "height": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 600,
+        "description": "Set the height of the chart, default is 600px."
+      },
+      "theme": {
+        "type": "string",
+        "enum": ["default", "dark"],
+        "default": "default",
+        "description": "Set the theme for the chart, optional, default is 'default'."
+      },
+      "title": {
+        "type": "string",
+        "description": "Set the title of the chart."
+      },
+      "width": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 800,
+        "description": "Set the width of the chart, default is 800px."
+      }
+    },
+    "required": ["data"],
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

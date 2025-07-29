@@ -1,0 +1,63 @@
+{
+  "name": "generate_parallel_chart",
+  "description": "Generate a parallel coordinates chart to display multi-dimensional data, such as, comparing different products across multiple attributes.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name or identifier for this data series."
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "description": "Array of values for each dimension."
+            }
+          },
+          "required": ["name", "values"]
+        },
+        "minItems": 1,
+        "description": "Data for parallel chart, such as, [{ name: 'Product A', values: [4.2, 3.4, 2.3, 1.8] }]."
+      },
+      "dimensions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "description": "Names of the dimensions/axes, such as, ['Price', 'Quality', 'Service', 'Value']."
+      },
+      "height": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 600,
+        "description": "Set the height of the chart, default is 600px."
+      },
+      "theme": {
+        "type": "string",
+        "enum": ["default", "dark"],
+        "default": "default",
+        "description": "Set the theme for the chart, optional, default is 'default'."
+      },
+      "title": {
+        "type": "string",
+        "description": "Set the title of the chart."
+      },
+      "width": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "default": 800,
+        "description": "Set the width of the chart, default is 800px."
+      }
+    },
+    "required": ["data", "dimensions"],
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}
