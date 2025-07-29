@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { generateChartImageForTool } from "../utils";
+import { generateChartImage } from "../utils";
 import {
   HeightSchema,
   ThemeSchema,
@@ -36,7 +36,7 @@ export const generateRadarChartTool = {
     title: TitleSchema,
     width: WidthSchema,
   }),
-  run: (params: {
+  run: async (params: {
     data: Array<{ name: string; value: number; group?: string }>;
     height: number;
     theme?: "default" | "dark";
@@ -162,13 +162,13 @@ export const generateRadarChartTool = {
       },
     };
 
-    return generateChartImageForTool(
+    return await generateChartImage(
       echartsOption,
       width,
       height,
       theme,
       "png",
-      "generateradar_chart",
+      "generate_radar_chart",
     );
   },
 };

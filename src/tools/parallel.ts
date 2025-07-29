@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { generateChartImageForTool } from "../utils";
+import { generateChartImage } from "../utils";
 import {
   HeightSchema,
   ThemeSchema,
@@ -36,7 +36,7 @@ export const generateParallelChartTool = {
     title: TitleSchema,
     width: WidthSchema,
   }),
-  run: (params: {
+  run: async (params: {
     data: Array<{ name: string; values: number[] }>;
     dimensions: string[];
     height: number;
@@ -133,13 +133,13 @@ export const generateParallelChartTool = {
       },
     };
 
-    return generateChartImageForTool(
+    return await generateChartImage(
       echartsOption,
       width,
       height,
       theme,
       "png",
-      "generateparallel_chart",
+      "generate_parallel_chart",
     );
   },
 };

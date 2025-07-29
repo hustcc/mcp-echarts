@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { generateChartImageForTool } from "../utils";
+import { generateChartImage } from "../utils";
 import {
   HeightSchema,
   ThemeSchema,
@@ -38,7 +38,7 @@ export const generatePieChartTool = {
     title: TitleSchema,
     width: WidthSchema,
   }),
-  run: (params: {
+  run: async (params: {
     data: Array<{ category: string; value: number }>;
     height: number;
     innerRadius?: number;
@@ -86,7 +86,7 @@ export const generatePieChartTool = {
       },
     };
 
-    return generateChartImageForTool(
+    return await generateChartImage(
       echartsOption,
       width,
       height,

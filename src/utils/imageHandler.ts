@@ -1,38 +1,40 @@
+import type {
+  ImageContent,
+  TextContent,
+} from "@modelcontextprotocol/sdk/types.js";
 import type { EChartsOption } from "echarts";
+import { isMinIOConfigured, storeBufferToMinIO } from "./minio";
 import { renderECharts } from "./render";
 
 /**
- * 图片输出格式
+ * Image output format
  */
 export type ImageOutputFormat = "png" | "svg" | "option";
 
 /**
- * MCP内容类型
+ * MCP content type - using official MCP SDK types
+ * This is a union of official MCP content types for better compatibility
  */
-export interface MCPContent {
-  type: "image" | "text";
-  data?: string;
-  text?: string;
-  mimeType?: string;
-}
+export type MCPContent = ImageContent | TextContent;
 
 /**
- * 图片处理结果
+ * Image processing result
  */
 export interface ImageHandlerResult {
   content: MCPContent[];
 }
 
 /**
- * 统一的图片生成和处理方法
- * 根据配置自动决定返回base64图片数据还是MinIO URL的img标签
+ * Unified chart image generation method
+ * Automatically decides whether to return Base64 image data or MinIO URL based on configuration
  *
- * @param echartsOption ECharts配置选项
- * @param width 图片宽度，默认800
- * @param height 图片高度，默认600
- * @param theme 主题，默认'default'
- * @param outputType 输出类型，默认'png'
- * @returns 统一格式的MCP响应内容
+ * @param echartsOption ECharts configuration options
+ * @param width Image width, default 800
+ * @param height Image height, default 600
+ * @param theme Theme, default 'default'
+ * @param outputType Output type, default 'png'
+ * @param toolName Tool name (for debug logging)
+ * @returns Unified MCP response content format
  */
 export async function generateChartImage(
   echartsOption: EChartsOption,
@@ -40,81 +42,9 @@ export async function generateChartImage(
   height = 600,
   theme: "default" | "dark" = "default",
   outputType: ImageOutputFormat = "png",
-): Promise<ImageHandlerResult> {
-  // 渲染图表
-  const result = await renderECharts(
-    echartsOption,
-    width,
-    height,
-    theme,
-    outputType,
-  );
-
-  // 判断输出类型
-  const isImage = outputType !== "svg" && outputType !== "option";
-
-  if (!isImage) {
-    // SVG或配置选项，直接返回文本
-    return {
-      content: [
-        {
-          type: "text",
-          text: result,
-        },
-      ],
-    };
-  }
-
-  // 图片类型，判断是URL还是base64
-  const isUrl = result.startsWith("http");
-
-  if (isUrl) {
-    // MinIO URL，返回文件地址
-    return {
-      content: [
-        {
-          type: "text",
-          text: `Chart image is available at: ${result}`,
-        },
-      ],
-    };
-  }
-
-  // base64数据，返回图片类型
-  return {
-    content: [
-      {
-        type: "image",
-        data: result.startsWith("data:image/png;base64,")
-          ? result.replace("data:image/png;base64,", "")
-          : result,
-        mimeType: "image/png",
-      },
-    ],
-  };
-}
-
-/**
- * 为工具提供的便捷包装函数
- * 包含错误处理和调试日志
- *
- * @param echartsOption ECharts配置选项
- * @param width 图片宽度
- * @param height 图片高度
- * @param theme 主题
- * @param outputType 输出类型
- * @param toolName 工具名称（用于调试日志）
- * @returns MCP响应内容
- */
-export async function generateChartImageForTool(
-  echartsOption: EChartsOption,
-  width = 800,
-  height = 600,
-  theme: "default" | "dark" = "default",
-  outputType: ImageOutputFormat = "png",
   toolName = "unknown",
 ): Promise<ImageHandlerResult> {
-  // 调试日志
+  // Debug logging
   if (process.env.DEBUG_MCP_ECHARTS) {
     console.error(`[DEBUG] ${toolName} generating chart:`, {
       width,
@@ -126,7 +56,8 @@ export async function generateChartImageForTool(
   }
 
   try {
-    const result = await generateChartImage(
+    // Render chart
+    const result = await renderECharts(
       echartsOption,
       width,
       height,
@@ -134,19 +65,79 @@ export async function generateChartImageForTool(
       outputType,
     );
 
-    // 成功日志
+    // Determine output type
+    const isImage = outputType !== "svg" && outputType !== "option";
+
+    if (!isImage) {
+      // SVG or configuration options, return text directly
+      const response = {
+        content: [
+          {
+            type: "text" as const,
+            text: result as string,
+          },
+        ],
+      };
+
+      if (process.env.DEBUG_MCP_ECHARTS) {
+        console.error(`[DEBUG] ${toolName} chart generated successfully:`, {
+          contentType: "text",
+          textLength: (result as string).length,
+        });
+      }
+
+      return response;
+    }
+
+    // PNG image type
+    const buffer = result as Buffer;
+
+    if (isMinIOConfigured()) {
+      // Use MinIO storage, return URL
+      const url = await storeBufferToMinIO(buffer, "png", "image/png");
+
+      const response = {
+        content: [
+          {
+            type: "text" as const,
+            text: url,
+          },
+        ],
+      };
+
+      if (process.env.DEBUG_MCP_ECHARTS) {
+        console.error(`[DEBUG] ${toolName} chart generated successfully:`, {
+          contentType: "text",
+          url: url,
+        });
+      }
+
+      return response;
+    }
+
+    // Fallback to Base64
+    const base64Data = buffer.toString("base64");
+
+    const response = {
+      content: [
+        {
+          type: "image" as const,
+          data: base64Data,
+          mimeType: "image/png",
+        },
+      ],
+    };
+
     if (process.env.DEBUG_MCP_ECHARTS) {
       console.error(`[DEBUG] ${toolName} chart generated successfully:`, {
-        contentType: result.content[0].type,
-        hasData: !!result.content[0].data,
-        hasText: !!result.content[0].text,
-        textPreview: result.content[0].text?.substring(0, 50),
+        contentType: "image",
+        dataLength: base64Data.length,
       });
     }
 
-    return result;
+    return response;
   } catch (error) {
-    // 错误日志
+    // Error logging
     if (process.env.DEBUG_MCP_ECHARTS) {
       console.error(`[DEBUG] ${toolName} chart generation failed:`, {
         error: error instanceof Error ? error.message : String(error),

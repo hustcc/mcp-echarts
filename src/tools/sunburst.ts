@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { generateChartImageForTool } from "../utils";
+import { generateChartImage } from "../utils";
 import {
   HeightSchema,
   ThemeSchema,
@@ -43,7 +43,7 @@ export const generateSunburstChartTool = {
     title: TitleSchema,
     width: WidthSchema,
   }),
-  run: (params: {
+  run: async (params: {
     data: Array<SunburstDataType>;
     height: number;
     theme?: "default" | "dark";
@@ -119,13 +119,13 @@ export const generateSunburstChartTool = {
       },
     };
 
-    return generateChartImageForTool(
+    return await generateChartImage(
       echartsOption,
       width,
       height,
       theme,
       "png",
-      "generatesunburst_chart",
+      "generate_sunburst_chart",
     );
   },
 };

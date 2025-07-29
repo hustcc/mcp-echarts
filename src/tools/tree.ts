@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { generateChartImageForTool } from "../utils";
+import { generateChartImage } from "../utils";
 import {
   HeightSchema,
   ThemeSchema,
@@ -52,7 +52,7 @@ export const generateTreeChartTool = {
     title: TitleSchema,
     width: WidthSchema,
   }),
-  run: (params: {
+  run: async (params: {
     data: TreeDataType;
     height: number;
     layout?: "orthogonal" | "radial";
@@ -155,13 +155,13 @@ export const generateTreeChartTool = {
       },
     };
 
-    return generateChartImageForTool(
+    return await generateChartImage(
       echartsOption,
       width,
       height,
       theme,
       "png",
-      "generatetree_chart",
+      "generate_tree_chart",
     );
   },
 };

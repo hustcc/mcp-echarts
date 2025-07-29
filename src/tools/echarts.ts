@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { generateChartImageForTool } from "../utils";
+import { generateChartImage } from "../utils";
 
 function isValidEChartsOption(option: string): boolean {
   try {
@@ -126,13 +126,13 @@ ATTENTION: A valid ECharts option must be a valid JSON string, and cannot be emp
     const option = JSON.parse(echartsOption);
 
     // Use the unified image generation method
-    return await generateChartImageForTool(
+    return await generateChartImage(
       option,
       width,
       height,
       theme,
       outputType,
-      "generate_echarts",
+      "generate_echarts_chart",
     );
   },
 };

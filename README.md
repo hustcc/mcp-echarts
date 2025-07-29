@@ -86,21 +86,9 @@ For better performance and sharing capabilities, you can configure MinIO object 
    MINIO_BUCKET_NAME=mcp-echarts
    ```
 
-3. **Test the connection:**
-   ```bash
-   node test-minio.js
-   ```
-
-### Benefits of MinIO Integration
-
-- ✅ **Reduced token usage** - URLs are much shorter than Base64 data
-- ✅ **Permanent accessibility** - Charts remain available long-term
-- ✅ **Easy sharing** - Send URLs to others to view charts
-- ✅ **Better UX** - Most MCP clients handle URLs better than Base64
-
 ### Fallback Behavior
 
-If MinIO is not configured or unavailable, the system automatically falls back to Base64 data output, ensuring compatibility.
+If MinIO is not configured or unavailable, the system automatically falls back to `Base64` data output, ensuring compatibility.
 
 
 ## 🔨 Development

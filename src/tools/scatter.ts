@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { generateChartImageForTool } from "../utils";
+import { generateChartImage } from "../utils";
 import {
   AxisXTitleSchema,
   AxisYTitleSchema,
@@ -34,7 +34,7 @@ export const generateScatterChartTool = {
     title: TitleSchema,
     width: WidthSchema,
   }),
-  run: (params: {
+  run: async (params: {
     axisXTitle?: string;
     axisYTitle?: string;
     data: Array<{ x: number; y: number }>;
@@ -86,13 +86,13 @@ export const generateScatterChartTool = {
       },
     };
 
-    return generateChartImageForTool(
+    return await generateChartImage(
       echartsOption,
       width,
       height,
       theme,
       "png",
-      "generatescatter_chart",
+      "generate_scatter_chart",
     );
   },
 };

@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { generateChartImageForTool } from "../utils";
+import { generateChartImage } from "../utils";
 import {
   HeightSchema,
   ThemeSchema,
@@ -59,7 +59,7 @@ export const generateGraphChartTool = {
     title: TitleSchema,
     width: WidthSchema,
   }),
-  run: (params: {
+  run: async (params: {
     data: {
       nodes: Array<{
         id: string;
@@ -162,13 +162,13 @@ export const generateGraphChartTool = {
           : undefined,
     };
 
-    return generateChartImageForTool(
+    return await generateChartImage(
       echartsOption,
       width,
       height,
       theme,
       "png",
-      "generategraph_chart",
+      "generate_graph_chart",
     );
   },
 };

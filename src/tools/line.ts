@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { generateChartImageForTool } from "../utils";
+import { generateChartImage } from "../utils";
 import {
   AxisXTitleSchema,
   AxisYTitleSchema,
@@ -181,7 +181,7 @@ export const generateLineChartTool = {
       },
     };
 
-    return generateChartImageForTool(
+    return generateChartImage(
       echartsOption,
       width,
       height,

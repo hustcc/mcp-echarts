@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { generateChartImageForTool } from "../utils";
+import { generateChartImage } from "../utils";
 import {
   HeightSchema,
   ThemeSchema,
@@ -30,7 +30,7 @@ export const generateFunnelChartTool = {
     title: TitleSchema,
     width: WidthSchema,
   }),
-  run: (params: {
+  run: async (params: {
     data: Array<{ category: string; value: number }>;
     height: number;
     theme?: "default" | "dark";
@@ -100,13 +100,13 @@ export const generateFunnelChartTool = {
       },
     };
 
-    return generateChartImageForTool(
+    return await generateChartImage(
       echartsOption,
       width,
       height,
       theme,
       "png",
-      "generatefunnel_chart",
+      "generate_funnel_chart",
     );
   },
 };

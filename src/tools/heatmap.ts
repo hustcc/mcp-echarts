@@ -1,6 +1,6 @@
 import type { EChartsOption, SeriesOption } from "echarts";
 import { z } from "zod";
-import { generateChartImageForTool } from "../utils";
+import { generateChartImage } from "../utils";
 import {
   AxisXTitleSchema,
   AxisYTitleSchema,
@@ -39,7 +39,7 @@ export const generateHeatmapChartTool = {
     title: TitleSchema,
     width: WidthSchema,
   }),
-  run: (params: {
+  run: async (params: {
     axisXTitle?: string;
     axisYTitle?: string;
     data: Array<{ x: string | number; y: string | number; value: number }>;
@@ -149,13 +149,13 @@ export const generateHeatmapChartTool = {
       },
     };
 
-    return generateChartImageForTool(
+    return await generateChartImage(
       echartsOption,
       width,
       height,
       theme,
       "png",
-      "generateheatmap_chart",
+      "generate_heatmap_chart",
     );
   },
 };
