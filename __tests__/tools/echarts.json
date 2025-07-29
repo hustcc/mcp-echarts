@@ -12,12 +12,16 @@
       "width": {
         "type": "number",
         "description": "The width of the ECharts in pixels. Default is 800.",
-        "default": 800
+        "default": 800,
+        "minimum": 50,
+        "maximum": 5000
       },
       "height": {
         "type": "number",
         "description": "The height of the ECharts in pixels. Default is 600.",
-        "default": 600
+        "default": 600,
+        "minimum": 50,
+        "maximum": 5000
       },
       "theme": {
         "type": "string",
