@@ -86,13 +86,13 @@ For better performance and sharing capabilities, you can configure MinIO object 
    MINIO_BUCKET_NAME=mcp-echarts
    ```
 
-3. **Integration with Major Cloud Providers:**
+3. **Integration with Object Storage Providers:**
+   - **[MinIO](https://min.io/)**: High-performance, S3-compatible object storage. Use [MinIO JavaScript Client](https://min.io/docs/minio/linux/developers/javascript/minio-javascript.html) for direct integration.
    - **[Amazon S3](https://aws.amazon.com/s3/)**: Use [AWS SDK](https://aws.amazon.com/sdk-for-javascript/) with compatible API endpoint.
    - **[Alibaba Cloud OSS](https://www.alibabacloud.com/product/object-storage-service)**: Use the [Alibaba Cloud SDK](https://www.alibabacloud.com/help/en/sdk) for OSS services.
    - **[Google Cloud Storage](https://cloud.google.com/storage)**: Integrate using [Google Cloud SDK](https://cloud.google.com/sdk) or compatible API.
    - **[Microsoft Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs)**: Use [Azure SDK](https://azure.microsoft.com/en-us/downloads/) for Blob storage access.
    - **[Tencent Cloud COS](https://intl.cloud.tencent.com/product/cos)**: Use the [Tencent Cloud SDK](https://intl.cloud.tencent.com/document/product/436/6474) for COS integration.
-
 ### Fallback Behavior
 
 If MinIO is not configured or unavailable, the system automatically falls back to `Base64` data output, ensuring compatibility.
