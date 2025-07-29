@@ -122,6 +122,7 @@ npm run start
 ## 🧑🏻‍💻 Contributors
 
 - [lyw405](https://github.com/lyw405): Supports 15+ charting MCP tool. [#2](https://github.com/hustcc/mcp-echarts/issues/2)
+- [susuperli](https://github.com/susuperli): use MinIO to save the chart image base64 and return the url. [#10](https://github.com/hustcc/mcp-echarts/issues/10)
 - [BQXBQX](https://github.com/BQXBQX): Use @napi-rs/canvas instead node-canvas. [#3](https://github.com/hustcc/mcp-echarts/issues/3)
 - [hustcc](https://github.com/hustcc): Initial the repo.
 
