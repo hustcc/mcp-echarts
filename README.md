@@ -14,8 +14,8 @@ Generate <img src="https://echarts.apache.org/zh/images/favicon.png" height="14"
 
 - Fully support all features and syntax of `ECharts`, include data, style, theme and so on.
 - Support exporting to `png`, `svg`, and `option` formats, with validation for `ECharts` to facilitate the model's multi-round output of correct syntax and graphics.
-- **MinIO Integration**: Store charts in MinIO object storage and return URLs instead of Base64 data for better performance and sharing capabilities.
-- Lightweight, we can install it with `zero dependence`.
+- MinIO Integration, store charts in `MinIO` object storage and return URLs instead of Base64 data for better performance and sharing capabilities.
+- Lightweight, we can install it easily with `zero dependence`.
 - Extremely `secure`, fully generated locally, without relying on any remote services.
 
 
@@ -55,15 +55,29 @@ On Window system:
 }
 ```
 
-Also, you can use it on aliyun, modelscope, glama.ai, smithery.ai or others with HTTP, SSE Protocol.
+Also, you can use it on [modelscope](https://www.modelscope.cn/mcp/servers/hustcc/MCP-ECharts), [glama.ai](https://glama.ai/mcp/servers/@hustcc/mcp-echarts), [smithery.ai](https://smithery.ai/server/@hustcc/mcp-echarts) or others with HTTP, SSE Protocol.
+
 
 ## 🗂️ MinIO Configuration (Optional)
 
 For better performance and sharing capabilities, you can configure MinIO object storage to store chart images as URLs instead of Base64 data.
 
-### Setup MinIO
+> [!NOTE]
+> If MinIO is not configured or unavailable, the system automatically falls back to `Base64` data output, ensuring compatibility.
+
+We can Integrate with `MinIO` object storage providers below.
+
+ - [MinIO](https://min.io/): High-performance, S3-compatible object storage. Use [MinIO JavaScript Client](https://min.io/docs/minio/linux/developers/javascript/minio-javascript.html) for direct integration.
+ - [Amazon S3](https://aws.amazon.com/s3/): Use [AWS SDK](https://aws.amazon.com/sdk-for-javascript/) with compatible API endpoint.
+ - [Alibaba Cloud OSS](https://www.alibabacloud.com/product/object-storage-service): Use the [Alibaba Cloud SDK](https://www.alibabacloud.com/help/en/sdk) for OSS services.
+ - [Google Cloud Storage](https://cloud.google.com/storage): Integrate using [Google Cloud SDK](https://cloud.google.com/sdk) or compatible API.
+ - [Microsoft Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs): Use [Azure SDK](https://azure.microsoft.com/en-us/downloads/) for Blob storage access.
+ - [Tencent Cloud COS](https://intl.cloud.tencent.com/product/cos): Use the [Tencent Cloud SDK](https://intl.cloud.tencent.com/document/product/436/6474) for COS integration.
+
+Also, we can setup MinIO locally for free.
 
 1. **Install and start MinIO locally:**
+
    ```bash
    # Download MinIO (macOS example)
    brew install minio/stable/minio
@@ -72,7 +86,8 @@ For better performance and sharing capabilities, you can configure MinIO object 
    minio server ~/minio-data --console-address :9001
    ```
 
-2. **Configure environment variables:**
+3. **Configure environment variables:**
+
    ```bash
    # Copy the example environment file
    cp .env.example .env
@@ -85,17 +100,6 @@ For better performance and sharing capabilities, you can configure MinIO object 
    MINIO_SECRET_KEY=minioadmin
    MINIO_BUCKET_NAME=mcp-echarts
    ```
-
-3. **Integration with Object Storage Providers:**
-   - **[MinIO](https://min.io/)**: High-performance, S3-compatible object storage. Use [MinIO JavaScript Client](https://min.io/docs/minio/linux/developers/javascript/minio-javascript.html) for direct integration.
-   - **[Amazon S3](https://aws.amazon.com/s3/)**: Use [AWS SDK](https://aws.amazon.com/sdk-for-javascript/) with compatible API endpoint.
-   - **[Alibaba Cloud OSS](https://www.alibabacloud.com/product/object-storage-service)**: Use the [Alibaba Cloud SDK](https://www.alibabacloud.com/help/en/sdk) for OSS services.
-   - **[Google Cloud Storage](https://cloud.google.com/storage)**: Integrate using [Google Cloud SDK](https://cloud.google.com/sdk) or compatible API.
-   - **[Microsoft Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs)**: Use [Azure SDK](https://azure.microsoft.com/en-us/downloads/) for Blob storage access.
-   - **[Tencent Cloud COS](https://intl.cloud.tencent.com/product/cos)**: Use the [Tencent Cloud SDK](https://intl.cloud.tencent.com/document/product/436/6474) for COS integration.
-### Fallback Behavior
-
-If MinIO is not configured or unavailable, the system automatically falls back to `Base64` data output, ensuring compatibility.
 
 
 ## 🔨 Development
@@ -121,9 +125,9 @@ npm run start
 
 ## 🧑🏻‍💻 Contributors
 
-- [lyw405](https://github.com/lyw405): Supports 15+ charting MCP tool. [#2](https://github.com/hustcc/mcp-echarts/issues/2)
-- [susuperli](https://github.com/susuperli): use MinIO to save the chart image base64 and return the url. [#10](https://github.com/hustcc/mcp-echarts/issues/10)
-- [BQXBQX](https://github.com/BQXBQX): Use @napi-rs/canvas instead node-canvas. [#3](https://github.com/hustcc/mcp-echarts/issues/3)
+- [lyw405](https://github.com/lyw405): Supports `15+` charting MCP tool. [#2](https://github.com/hustcc/mcp-echarts/issues/2)
+- [susuperli](https://github.com/susuperli): Use `MinIO` to save the chart image base64 and return the url. [#10](https://github.com/hustcc/mcp-echarts/issues/10)
+- [BQXBQX](https://github.com/BQXBQX): Use `@napi-rs/canvas` instead node-canvas. [#3](https://github.com/hustcc/mcp-echarts/issues/3)
 - [hustcc](https://github.com/hustcc): Initial the repo.
 
 
