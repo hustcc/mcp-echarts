@@ -93,26 +93,42 @@ export async function generateChartImage(
     const buffer = result as Buffer;
 
     if (isMinIOConfigured()) {
-      // Use MinIO storage, return URL
-      const url = await storeBufferToMinIO(buffer, "png", "image/png");
+      try {
+        // Use MinIO storage, return URL
+        const url = await storeBufferToMinIO(buffer, "png", "image/png");
 
-      const response = {
-        content: [
-          {
-            type: "text" as const,
-            text: url,
-          },
-        ],
-      };
+        const response = {
+          content: [
+            {
+              type: "text" as const,
+              text: url,
+            },
+          ],
+        };
 
-      if (process.env.DEBUG_MCP_ECHARTS) {
-        console.error(`[DEBUG] ${toolName} chart generated successfully:`, {
-          contentType: "text",
-          url: url,
-        });
+        if (process.env.DEBUG_MCP_ECHARTS) {
+          console.error(`[DEBUG] ${toolName} chart generated successfully:`, {
+            contentType: "text",
+            url: url,
+          });
+        }
+
+        return response;
+      } catch (minioError) {
+        // MinIO failed, log warning and fallback to Base64
+        if (process.env.DEBUG_MCP_ECHARTS) {
+          console.error(
+            `[DEBUG] ${toolName} MinIO storage failed, falling back to Base64:`,
+            {
+              error:
+                minioError instanceof Error
+                  ? minioError.message
+                  : String(minioError),
+            },
+          );
+        }
+        // Continue to Base64 fallback below
       }
-
-      return response;
     }
 
     // Fallback to Base64
