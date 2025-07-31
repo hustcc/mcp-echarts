@@ -155,8 +155,9 @@ export const generateGraphChartTool = {
       legend:
         categories.length > 0
           ? {
-              orient: "vertical",
-              left: "left",
+              left: "center",
+              orient: "horizontal",
+              bottom: 10,
               data: categories,
             }
           : undefined,

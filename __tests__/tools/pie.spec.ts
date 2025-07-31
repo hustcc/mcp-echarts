@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generatePieChartTool } from "../../src/tools/pie";
-import { TEST_CONFIG, extractImageBuffer } from "../utils/matcher";
+import "../utils/matcher";
 
 describe("Pie Chart Tool", () => {
   it("should generate a basic pie chart", async () => {
@@ -13,15 +13,12 @@ describe("Pie Chart Tool", () => {
         { category: "Affiliate Ads", value: 484 },
         { category: "Video Ads", value: 300 },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "pie-basic", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("pie-basic");
   });
 
   it("should generate a donut chart", async () => {
@@ -33,16 +30,13 @@ describe("Pie Chart Tool", () => {
         { category: "Operations", value: 15 },
         { category: "Support", value: 10 },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
       innerRadius: 0.4,
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "pie-donut", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("pie-donut");
   });
 
   it("should generate a pie chart with many categories", async () => {
@@ -58,18 +52,11 @@ describe("Pie Chart Tool", () => {
         { category: "Toys", value: 50 },
         { category: "Others", value: 35 },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(
-      TEST_CONFIG.outputDir,
-      "pie-many-categories",
-      {
-        maxError: TEST_CONFIG.defaultMaxError,
-      },
-    );
+    await expect(result).toImageEqual("pie-many-categories");
   });
 });

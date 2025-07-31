@@ -51,20 +51,20 @@ export const generateGaugeChartTool = {
   }) => {
     const { data, height, max = 100, min = 0, theme, title, width } = params;
 
-    // Transform data for ECharts gauge chart
-    const gaugeData = data.map((item) => ({
-      name: item.name,
-      value: item.value,
-    }));
+    // For multiple gauges, arrange them horizontally
+    const series: Array<SeriesOption> = data.map((item, index) => {
+      const isMultiple = data.length > 1;
 
-    const series: Array<SeriesOption> = [
-      {
+      return {
+        name: item.name,
         type: "gauge",
-        data: gaugeData,
+        data: [{ name: item.name, value: item.value }],
+        center: isMultiple
+          ? [`${(100 / (data.length + 1)) * (index + 1)}%`, "60%"]
+          : ["50%", "55%"],
+        radius: isMultiple ? `${Math.min(80 / data.length, 30)}%` : "80%",
         min: min,
         max: max,
-        radius: "80%",
-        center: ["50%", "55%"],
         startAngle: 180,
         endAngle: 0,
         axisLine: {
@@ -101,27 +101,37 @@ export const generateGaugeChartTool = {
         axisLabel: {
           color: "inherit",
           distance: 40,
-          fontSize: 12,
+          fontSize: isMultiple ? 10 : 12,
         },
         detail: {
           valueAnimation: true,
           formatter: "{value}",
           color: "inherit",
-          fontSize: 20,
+          fontSize: isMultiple ? 16 : 20,
           offsetCenter: [0, "30%"],
         },
         title: {
           offsetCenter: [0, "50%"],
-          fontSize: 14,
+          fontSize: isMultiple ? 12 : 14,
         },
-      },
-    ];
+      };
+    });
 
     const echartsOption: EChartsOption = {
+      legend:
+        data.length > 1
+          ? {
+              bottom: 10,
+              left: "center",
+              orient: "horizontal",
+              data: data.map((item) => item.name),
+            }
+          : undefined,
       series,
       title: {
         left: "center",
         text: title,
+        top: data.length > 1 ? "5%" : undefined,
       },
     };
 

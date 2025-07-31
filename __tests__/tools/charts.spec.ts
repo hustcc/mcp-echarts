@@ -21,23 +21,23 @@ import {
 import { zodToJsonSchema } from "../schema";
 
 // Import expected JSON Schema definition files
-import barExpected from "./bar.json";
-import boxplotExpected from "./boxplot.json";
-import candlestickExpected from "./candlestick.json";
-import echartsExpected from "./echarts.json";
-import funnelExpected from "./funnel.json";
-import gaugeExpected from "./gauge.json";
-import graphExpected from "./graph.json";
-import heatmapExpected from "./heatmap.json";
-import lineExpected from "./line.json";
-import parallelExpected from "./parallel.json";
-import pieExpected from "./pie.json";
-import radarExpected from "./radar.json";
-import sankeyExpected from "./sankey.json";
-import scatterExpected from "./scatter.json";
-import sunburstExpected from "./sunburst.json";
-import treeExpected from "./tree.json";
-import treemapExpected from "./treemap.json";
+import barExpected from "../schema/bar.json";
+import boxplotExpected from "../schema/boxplot.json";
+import candlestickExpected from "../schema/candlestick.json";
+import echartsExpected from "../schema/echarts.json";
+import funnelExpected from "../schema/funnel.json";
+import gaugeExpected from "../schema/gauge.json";
+import graphExpected from "../schema/graph.json";
+import heatmapExpected from "../schema/heatmap.json";
+import lineExpected from "../schema/line.json";
+import parallelExpected from "../schema/parallel.json";
+import pieExpected from "../schema/pie.json";
+import radarExpected from "../schema/radar.json";
+import sankeyExpected from "../schema/sankey.json";
+import scatterExpected from "../schema/scatter.json";
+import sunburstExpected from "../schema/sunburst.json";
+import treeExpected from "../schema/tree.json";
+import treemapExpected from "../schema/treemap.json";
 
 /**
  * Chart tools JSON Schema validation test suite

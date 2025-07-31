@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateEChartsTool } from "../../src/tools/echarts";
-import { TEST_CONFIG, extractImageBuffer } from "../utils/matcher";
+import "../utils/matcher";
 
 describe("ECharts Tool", () => {
   it("should generate chart from ECharts option JSON string", async () => {
@@ -25,15 +25,12 @@ describe("ECharts Tool", () => {
 
     const result = await generateEChartsTool.run({
       echartsOption,
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "echarts-custom", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("echarts-custom");
   });
 
   it("should generate pie chart using ECharts option", async () => {
@@ -46,8 +43,9 @@ describe("ECharts Tool", () => {
         trigger: "item",
       },
       legend: {
-        orient: "vertical",
-        left: "left",
+        orient: "horizontal",
+        left: "center",
+        bottom: 10,
       },
       series: [
         {
@@ -74,19 +72,12 @@ describe("ECharts Tool", () => {
 
     const result = await generateEChartsTool.run({
       echartsOption,
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(
-      TEST_CONFIG.outputDir,
-      "echarts-pie-custom",
-      {
-        maxError: TEST_CONFIG.defaultMaxError,
-      },
-    );
+    await expect(result).toImageEqual("echarts-pie-custom");
   });
 
   it("should return SVG when outputType is svg", async () => {

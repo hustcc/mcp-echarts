@@ -96,8 +96,9 @@ export const generateFunnelChartTool = {
         trigger: "item",
       },
       legend: {
-        orient: "vertical",
-        left: "left",
+        left: "center",
+        orient: "horizontal",
+        bottom: 10,
         data: funnelData.map((item) => item.name),
       },
     };

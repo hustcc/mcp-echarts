@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateTreeChartTool } from "../../src/tools/tree";
-import { TEST_CONFIG, extractImageBuffer } from "../utils/matcher";
+import "../utils/matcher";
 
 describe("Tree Chart Tool", () => {
   it("should generate a basic tree chart", async () => {
@@ -23,15 +23,12 @@ describe("Tree Chart Tool", () => {
           },
         ],
       },
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "tree-basic", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("tree-basic");
   });
 
   it("should generate a radial tree chart", async () => {
@@ -55,14 +52,11 @@ describe("Tree Chart Tool", () => {
         ],
       },
       layout: "radial",
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "tree-radial", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("tree-radial");
   });
 });

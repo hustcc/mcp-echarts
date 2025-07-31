@@ -158,7 +158,7 @@ export const generateLineChartTool = {
         ? {
             left: "center",
             orient: "horizontal",
-            top: "top",
+            bottom: 10,
           }
         : undefined,
       series,

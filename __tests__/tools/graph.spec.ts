@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateGraphChartTool } from "../../src/tools/graph";
-import { TEST_CONFIG, extractImageBuffer } from "../utils/matcher";
+import "../utils/matcher";
 
 describe("Graph Chart Tool", () => {
   it("should generate a basic graph chart", async () => {
@@ -20,14 +20,11 @@ describe("Graph Chart Tool", () => {
           { source: "4", target: "1" },
         ],
       },
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "graph-basic", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("graph-basic");
   });
 });

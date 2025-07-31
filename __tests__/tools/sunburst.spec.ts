@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateSunburstChartTool } from "../../src/tools/sunburst";
-import { TEST_CONFIG, extractImageBuffer } from "../utils/matcher";
+import "../utils/matcher";
 
 describe("Sunburst Chart Tool", () => {
   it("should generate a basic sunburst chart", async () => {
@@ -31,14 +31,11 @@ describe("Sunburst Chart Tool", () => {
           ],
         },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "sunburst-basic", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("sunburst-basic");
   });
 });

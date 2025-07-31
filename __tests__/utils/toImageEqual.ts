@@ -7,6 +7,63 @@ export type toImageEqualOptions = {
   maxError?: number;
 };
 
+// Helper function to extract buffer from MCP tool response
+function extractImageBuffer(response: unknown): Buffer {
+  if (Buffer.isBuffer(response)) {
+    return response;
+  }
+
+  // Handle MCP tool response format with content array
+  if (response && typeof response === "object" && "content" in response) {
+    const content = (response as { content: unknown[] }).content;
+    if (Array.isArray(content) && content.length > 0) {
+      const item = content[0];
+      if (
+        item &&
+        typeof item === "object" &&
+        "type" in item &&
+        "data" in item
+      ) {
+        const contentItem = item as { type: string; data: string };
+        if (contentItem.type === "image" && contentItem.data) {
+          return Buffer.from(contentItem.data, "base64");
+        }
+      }
+    }
+  }
+
+  // Handle MCP content response format (direct array)
+  if (Array.isArray(response) && response.length > 0) {
+    const content = response[0];
+    if (
+      content &&
+      typeof content === "object" &&
+      "type" in content &&
+      "data" in content
+    ) {
+      const contentItem = content as { type: string; data: string };
+      if (contentItem.type === "image" && contentItem.data) {
+        return Buffer.from(contentItem.data, "base64");
+      }
+    }
+  }
+
+  // Handle direct object response
+  if (
+    response &&
+    typeof response === "object" &&
+    "type" in response &&
+    "data" in response
+  ) {
+    const contentItem = response as { type: string; data: string };
+    if (contentItem.type === "image" && contentItem.data) {
+      return Buffer.from(contentItem.data, "base64");
+    }
+  }
+
+  throw new Error("Unable to extract image buffer from response");
+}
+
 /**
 // Diff between PNGs
  */
@@ -51,12 +108,15 @@ function diff(
 
 // Reference: https://jestjs.io/docs/26.x/expect#expectextendmatchers
 export async function toImageEqual(
-  buffer: Buffer,
+  response: unknown,
   dir: string,
   name: string,
   options: toImageEqualOptions = {},
 ): Promise<{ message: () => string; pass: boolean }> {
-  const { maxError = 0.2 } = options;
+  const { maxError = 0.05 } = options;
+
+  // Extract buffer from MCP response
+  const buffer = extractImageBuffer(response);
 
   const targetFile = path.join(dir, name);
   const actualFilePath = path.join(dir, `${name}-actual.png`);

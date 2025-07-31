@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateBarChartTool } from "../../src/tools/bar";
-import { TEST_CONFIG, extractImageBuffer } from "../utils/matcher";
+import "../utils/matcher";
 
 describe("Bar Chart Tool", () => {
   it("should generate a basic bar chart", async () => {
@@ -16,15 +16,12 @@ describe("Bar Chart Tool", () => {
         { category: "High Heels", value: 70 },
         { category: "Socks", value: 110 },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "bar-basic", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("bar-basic");
   });
 
   it("should generate a grouped bar chart", async () => {
@@ -42,16 +39,13 @@ describe("Bar Chart Tool", () => {
         { category: "Q4", value: 80, group: "Sales" },
         { category: "Q4", value: 90, group: "Marketing" },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
       group: true,
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "bar-grouped", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("bar-grouped");
   });
 
   it("should generate a stacked bar chart", async () => {
@@ -69,15 +63,12 @@ describe("Bar Chart Tool", () => {
         { category: "Q4", value: 80, group: "Product A" },
         { category: "Q4", value: 90, group: "Product B" },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
       stack: true,
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "bar-stacked", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("bar-stacked");
   });
 });

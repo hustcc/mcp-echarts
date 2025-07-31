@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateFunnelChartTool } from "../../src/tools/funnel";
-import { TEST_CONFIG, extractImageBuffer } from "../utils/matcher";
+import "../utils/matcher";
 
 describe("Funnel Chart Tool", () => {
   it("should generate a basic funnel chart", async () => {
@@ -13,15 +13,12 @@ describe("Funnel Chart Tool", () => {
         { category: "Checkout", value: 15000 },
         { category: "Purchase", value: 8000 },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "funnel-basic", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("funnel-basic");
   });
 
   it("should generate marketing funnel chart", async () => {
@@ -34,18 +31,11 @@ describe("Funnel Chart Tool", () => {
         { category: "Sign Up", value: 1200 },
         { category: "Purchase", value: 300 },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(
-      TEST_CONFIG.outputDir,
-      "funnel-marketing",
-      {
-        maxError: TEST_CONFIG.defaultMaxError,
-      },
-    );
+    await expect(result).toImageEqual("funnel-marketing");
   });
 });

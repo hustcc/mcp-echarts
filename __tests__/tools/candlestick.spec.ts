@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateCandlestickChartTool } from "../../src/tools/candlestick";
-import { TEST_CONFIG, extractImageBuffer } from "../utils/matcher";
+import "../utils/matcher";
 
 describe("Candlestick Chart Tool", () => {
   it("should generate a basic candlestick chart", async () => {
@@ -13,19 +13,12 @@ describe("Candlestick Chart Tool", () => {
         { date: "2023-01-04", open: 112, high: 118, low: 108, close: 116 },
         { date: "2023-01-05", open: 116, high: 130, low: 115, close: 125 },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(
-      TEST_CONFIG.outputDir,
-      "candlestick-basic",
-      {
-        maxError: TEST_CONFIG.defaultMaxError,
-      },
-    );
+    await expect(result).toImageEqual("candlestick-basic");
   });
 
   it("should generate candlestick chart with volume", async () => {
@@ -58,18 +51,11 @@ describe("Candlestick Chart Tool", () => {
         },
       ],
       showVolume: true,
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(
-      TEST_CONFIG.outputDir,
-      "candlestick-volume",
-      {
-        maxError: TEST_CONFIG.defaultMaxError,
-      },
-    );
+    await expect(result).toImageEqual("candlestick-volume");
   });
 });

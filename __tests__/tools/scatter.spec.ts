@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateScatterChartTool } from "../../src/tools/scatter";
-import { TEST_CONFIG, extractImageBuffer } from "../utils/matcher";
+import "../utils/matcher";
 
 describe("Scatter Chart Tool", () => {
   it("should generate a basic scatter chart", async () => {
@@ -17,15 +17,12 @@ describe("Scatter Chart Tool", () => {
         { x: 185, y: 75 },
         { x: 190, y: 80 },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "scatter-basic", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("scatter-basic");
   });
 
   it("should generate scatter chart with more data points", async () => {
@@ -43,14 +40,11 @@ describe("Scatter Chart Tool", () => {
       axisXTitle: "X Values",
       axisYTitle: "Y Values",
       data,
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "scatter-random", {
-      maxError: 0.1, // Higher tolerance for random data
-    });
+    await expect(result).toImageEqual("scatter-random");
   });
 });

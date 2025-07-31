@@ -75,6 +75,7 @@ export const generateCandlestickChartTool = {
 
     const series: Array<SeriesOption> = [
       {
+        name: "Candlestick",
         type: "candlestick",
         data: ohlcData,
         itemStyle: {
@@ -185,19 +186,21 @@ export const generateCandlestickChartTool = {
             {
               left: "10%",
               right: "8%",
-              height: "60%",
+              top: "15%",
+              height: "50%",
             },
             {
               left: "10%",
               right: "8%",
               top: "75%",
-              height: "16%",
+              height: "15%",
             },
           ]
         : [
             {
               left: "10%",
               right: "8%",
+              top: "15%",
               bottom: "15%",
             },
           ],

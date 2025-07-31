@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateLineChartTool } from "../../src/tools/line";
-import { TEST_CONFIG, extractImageBuffer } from "../utils/matcher";
+import "../utils/matcher";
 
 describe("Line Chart Tool", () => {
   it("should generate a basic line chart", async () => {
@@ -16,15 +16,12 @@ describe("Line Chart Tool", () => {
         { time: "May", value: 26 },
         { time: "June", value: 30 },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "line-basic", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("line-basic");
   });
 
   it("should generate a smooth line chart with area", async () => {
@@ -38,22 +35,15 @@ describe("Line Chart Tool", () => {
         { time: "Q3", value: 324 },
         { time: "Q4", value: 218 },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
       smooth: true,
       showArea: true,
       showSymbol: true,
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(
-      TEST_CONFIG.outputDir,
-      "line-smooth-area",
-      {
-        maxError: TEST_CONFIG.defaultMaxError,
-      },
-    );
+    await expect(result).toImageEqual("line-smooth-area");
   });
 
   it("should generate a multi-series line chart", async () => {
@@ -71,20 +61,13 @@ describe("Line Chart Tool", () => {
         { time: "Apr", value: 80, group: "Product A" },
         { time: "Apr", value: 90, group: "Product B" },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
       showSymbol: true,
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(
-      TEST_CONFIG.outputDir,
-      "line-multi-series",
-      {
-        maxError: TEST_CONFIG.defaultMaxError,
-      },
-    );
+    await expect(result).toImageEqual("line-multi-series");
   });
 
   it("should generate a stacked line chart", async () => {
@@ -100,16 +83,13 @@ describe("Line Chart Tool", () => {
         { time: "2022", value: 250, group: "Online" },
         { time: "2022", value: 180, group: "Offline" },
       ],
-      width: TEST_CONFIG.defaultWidth,
-      height: TEST_CONFIG.defaultHeight,
-      theme: TEST_CONFIG.defaultTheme,
+      width: 800,
+      height: 600,
+      theme: "default",
       stack: true,
       showArea: true,
     });
 
-    const buffer = extractImageBuffer(result);
-    await expect(buffer).toImageEqual(TEST_CONFIG.outputDir, "line-stacked", {
-      maxError: TEST_CONFIG.defaultMaxError,
-    });
+    await expect(result).toImageEqual("line-stacked");
   });
 });
