@@ -21,12 +21,14 @@
     "@napi-rs/canvas": "^0.1.73",
     "dotenv": "^17.2.1",
     "echarts": "^6.0.0",
+    "express": "^5.1.0",
     "minio": "^8.0.5",
     "zod": "^3.25.16"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@modelcontextprotocol/inspector": "^0.15.0",
+    "@types/express": "^5.0.3",
     "@types/node": "^22.15.21",
     "@types/pixelmatch": "^5.2.6",
     "@types/pngjs": "^6.0.5",

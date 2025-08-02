@@ -21,6 +21,8 @@ Generate <img src="https://echarts.apache.org/zh/images/favicon.png" height="14"
 
 ## 🤖 Usage
 
+### Desktop Applications (stdio transport)
+
 To use with `Desktop APP`, such as Claude, VSCode, Cline, Cherry Studio, and so on, add the  MCP server config below. On Mac system:
 
 ```json
@@ -56,6 +58,46 @@ On Window system:
 ```
 
 Also, you can use it on [modelscope](https://www.modelscope.cn/mcp/servers/hustcc/MCP-ECharts), [glama.ai](https://glama.ai/mcp/servers/@hustcc/mcp-echarts), [smithery.ai](https://smithery.ai/server/@hustcc/mcp-echarts) or others with HTTP, SSE Protocol.
+
+
+## 🚰 Run with SSE or Streamable transport
+
+Install the package globally.
+
+```bash
+npm install -g mcp-echarts
+```
+
+Run the server with your preferred transport option:
+
+```bash
+# For SSE transport (default endpoint: /sse)
+mcp-echarts -t sse
+
+# For Streamable transport with custom endpoint
+mcp-echarts -t streamable
+```
+
+Then you can access the server at:
+- SSE transport: `http://localhost:3033/sse`
+- Streamable transport: `http://localhost:3033/mcp`
+
+
+## 🎮 CLI Options
+
+You can also use the following CLI options when running the MCP server. Command options by run cli with `-h`.
+
+```plain
+MCP ECharts CLI
+
+Options:
+  --transport, -t  Specify the transport protocol: "stdio", "sse", or "streamable" (default: "stdio")
+  --port, -p       Specify the port for SSE or streamable transport (default: 3033)
+  --endpoint, -e   Specify the endpoint for the transport:
+                    - For SSE: default is "/sse"
+                    - For streamable: default is "/mcp"
+  --help, -h       Show this help message
+```
 
 
 ## 🗂️ MinIO Configuration (Optional)
