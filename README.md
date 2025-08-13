@@ -171,6 +171,7 @@ npm run start
 - [2niuhe](https://github.com/2niuhe): Support MCP with SSE and Streaming HTTP. [#17](https://github.com/hustcc/mcp-echarts/issues/17)
 - [susuperli](https://github.com/susuperli): Use `MinIO` to save the chart image base64 and return the url. [#10](https://github.com/hustcc/mcp-echarts/issues/10)
 - [BQXBQX](https://github.com/BQXBQX): Use `@napi-rs/canvas` instead node-canvas. [#3](https://github.com/hustcc/mcp-echarts/issues/3)
+- [Meet-student](https://github.com/Meet-student): Add `outputType` schema for all chart tools. [#24](https://github.com/hustcc/mcp-echarts/issues/24)
 - [hustcc](https://github.com/hustcc): Initial the repo.
 
 
