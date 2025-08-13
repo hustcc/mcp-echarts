@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { generateChartImage } from "../utils";
+import { OutputTypeSchema } from "../utils/schema";
 
 function isValidEChartsOption(option: string): boolean {
   try {
@@ -89,13 +90,7 @@ ATTENTION: A valid ECharts option must be a valid JSON string, and cannot be emp
       .describe("ECharts theme, optional. Default is 'default'.")
       .optional()
       .default("default"),
-    outputType: z
-      .enum(["png", "svg", "option"])
-      .describe(
-        "The output type of the diagram. Can be 'png', 'svg' or 'option'. Default is 'png', 'png' will return the rendered PNG image, 'svg' will return the rendered SVG string, and 'option' will return the valid ECharts option.",
-      )
-      .optional()
-      .default("png"),
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     echartsOption: string;
