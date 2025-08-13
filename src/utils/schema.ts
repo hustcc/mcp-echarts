@@ -27,6 +27,14 @@ export const ThemeSchema = z
   .default("default")
   .describe("Set the theme for the chart, optional, default is 'default'.");
 
+export const OutputTypeSchema = z
+  .enum(["png", "svg", "option"])
+  .optional()
+  .default("png")
+  .describe(
+    "The output type of the diagram. Can be 'png', 'svg' or 'option'. Default is 'png', 'png' will return the rendered PNG image, 'svg' will return the rendered SVG string, and 'option' will return the valid ECharts option.",
+  );
+
 export const TitleSchema = z
   .string()
   .optional()

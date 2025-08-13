@@ -5,6 +5,7 @@ import {
   AxisXTitleSchema,
   AxisYTitleSchema,
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -59,6 +60,7 @@ export const generateLineChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: (params: {
     axisXTitle?: string;
@@ -72,6 +74,7 @@ export const generateLineChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
     const {
       axisXTitle,
@@ -85,6 +88,7 @@ export const generateLineChartTool = {
       theme,
       title,
       width,
+      outputType,
     } = params;
 
     // Check if data has group field for multiple series
@@ -186,7 +190,7 @@ export const generateLineChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_line_chart",
     );
   },

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { generateChartImage } from "../utils";
 import {
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -58,6 +59,7 @@ export const generateGraphChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     data: {
@@ -74,8 +76,17 @@ export const generateGraphChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
-    const { data, height, layout = "force", theme, title, width } = params;
+    const {
+      data,
+      height,
+      layout = "force",
+      theme,
+      title,
+      width,
+      outputType,
+    } = params;
 
     // Validate that all edge nodes exist in nodes array
     const nodeIds = new Set(data.nodes.map((node) => node.id));
@@ -168,7 +179,7 @@ export const generateGraphChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_graph_chart",
     );
   },

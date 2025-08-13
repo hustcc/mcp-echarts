@@ -5,6 +5,7 @@ import {
   AxisXTitleSchema,
   AxisYTitleSchema,
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -33,6 +34,7 @@ export const generateScatterChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     axisXTitle?: string;
@@ -42,9 +44,18 @@ export const generateScatterChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
-    const { axisXTitle, axisYTitle, data, height, theme, title, width } =
-      params;
+    const {
+      axisXTitle,
+      axisYTitle,
+      data,
+      height,
+      theme,
+      title,
+      width,
+      outputType,
+    } = params;
 
     // Transform data for ECharts scatter chart
     const scatterData = data.map((item) => [item.x, item.y]);
@@ -91,7 +102,7 @@ export const generateScatterChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_scatter_chart",
     );
   },

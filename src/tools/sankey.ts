@@ -3,6 +3,7 @@ import { z } from "zod";
 import { generateChartImage } from "../utils";
 import {
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -39,6 +40,7 @@ export const generateSankeyChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     data: Array<{ source: string; target: string; value: number }>;
@@ -47,8 +49,17 @@ export const generateSankeyChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
-    const { data, height, nodeAlign = "justify", theme, title, width } = params;
+    const {
+      data,
+      height,
+      nodeAlign = "justify",
+      theme,
+      title,
+      width,
+      outputType,
+    } = params;
 
     // Extract unique nodes from data
     const nodeSet = new Set<string>();
@@ -108,7 +119,7 @@ export const generateSankeyChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_sankey_chart",
     );
   },

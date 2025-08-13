@@ -3,6 +3,7 @@ import { z } from "zod";
 import { generateChartImage } from "../utils";
 import {
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -40,6 +41,7 @@ export const generateCandlestickChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     data: Array<{
@@ -55,8 +57,17 @@ export const generateCandlestickChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
-    const { data, height, showVolume = false, theme, title, width } = params;
+    const {
+      data,
+      height,
+      showVolume = false,
+      theme,
+      title,
+      width,
+      outputType,
+    } = params;
 
     // Sort data by date
     const sortedData = [...data].sort(
@@ -216,7 +227,7 @@ export const generateCandlestickChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_candlestick_chart",
     );
   },

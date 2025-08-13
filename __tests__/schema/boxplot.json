@@ -58,6 +58,12 @@
         "exclusiveMinimum": 0,
         "default": 800,
         "description": "Set the width of the chart, default is 800px."
+      },
+      "outputType": {
+        "type": "string",
+        "enum": ["png", "svg", "option"],
+        "default": "png",
+        "description": "The output type of the diagram. Can be 'png', 'svg' or 'option'. Default is 'png', 'png' will return the rendered PNG image, 'svg' will return the rendered SVG string, and 'option' will return the valid ECharts option."
       }
     },
     "required": ["data"],

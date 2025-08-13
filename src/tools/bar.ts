@@ -5,6 +5,7 @@ import {
   AxisXTitleSchema,
   AxisYTitleSchema,
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -54,6 +55,7 @@ export const generateBarChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     axisXTitle?: string;
@@ -65,6 +67,7 @@ export const generateBarChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
     const {
       axisXTitle,
@@ -76,6 +79,7 @@ export const generateBarChartTool = {
       theme,
       title,
       width,
+      outputType,
     } = params;
 
     // Check if data has group field for multiple series
@@ -169,7 +173,7 @@ export const generateBarChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_bar_chart",
     );
   },

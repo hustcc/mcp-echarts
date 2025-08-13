@@ -3,6 +3,7 @@ import { z } from "zod";
 import { generateChartImage } from "../utils";
 import {
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -37,6 +38,7 @@ export const generatePieChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     data: Array<{ category: string; value: number }>;
@@ -45,8 +47,17 @@ export const generatePieChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
-    const { data, height, innerRadius = 0, theme, title, width } = params;
+    const {
+      data,
+      height,
+      innerRadius = 0,
+      theme,
+      title,
+      width,
+      outputType,
+    } = params;
 
     // Transform data for ECharts
     const pieData = data.map((item) => ({
@@ -91,7 +102,7 @@ export const generatePieChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_pie_chart",
     );
   },

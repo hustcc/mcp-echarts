@@ -3,6 +3,7 @@ import { z } from "zod";
 import { generateChartImage } from "../utils";
 import {
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -51,6 +52,7 @@ export const generateTreeChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     data: TreeDataType;
@@ -60,6 +62,7 @@ export const generateTreeChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
     const {
       data,
@@ -69,6 +72,7 @@ export const generateTreeChartTool = {
       theme,
       title,
       width,
+      outputType,
     } = params;
 
     const series: Array<SeriesOption> = [
@@ -160,7 +164,7 @@ export const generateTreeChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_tree_chart",
     );
   },

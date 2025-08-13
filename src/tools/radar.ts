@@ -3,6 +3,7 @@ import { z } from "zod";
 import { generateChartImage } from "../utils";
 import {
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -35,6 +36,7 @@ export const generateRadarChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     data: Array<{ name: string; value: number; group?: string }>;
@@ -42,8 +44,9 @@ export const generateRadarChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
-    const { data, height, theme, title, width } = params;
+    const { data, height, theme, title, width, outputType } = params;
 
     // Check if data has group field for multiple series
     const hasGroups = data.some((item) => item.group);
@@ -167,7 +170,7 @@ export const generateRadarChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_radar_chart",
     );
   },

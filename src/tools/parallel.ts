@@ -3,6 +3,7 @@ import { z } from "zod";
 import { generateChartImage } from "../utils";
 import {
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -35,6 +36,7 @@ export const generateParallelChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     data: Array<{ name: string; values: number[] }>;
@@ -43,8 +45,10 @@ export const generateParallelChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
-    const { data, dimensions, height, theme, title, width } = params;
+    const { data, dimensions, height, theme, title, width, outputType } =
+      params;
 
     // Calculate min/max for each dimension
     const parallelAxis = dimensions.map((dim, index) => {
@@ -138,7 +142,7 @@ export const generateParallelChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_parallel_chart",
     );
   },

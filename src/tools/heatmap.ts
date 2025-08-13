@@ -5,6 +5,7 @@ import {
   AxisXTitleSchema,
   AxisYTitleSchema,
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -38,6 +39,7 @@ export const generateHeatmapChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     axisXTitle?: string;
@@ -47,9 +49,18 @@ export const generateHeatmapChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
-    const { axisXTitle, axisYTitle, data, height, theme, title, width } =
-      params;
+    const {
+      axisXTitle,
+      axisYTitle,
+      data,
+      height,
+      theme,
+      title,
+      width,
+      outputType,
+    } = params;
 
     // Extract unique x and y values
     const xValues = Array.from(new Set(data.map((item) => item.x))).sort();
@@ -154,7 +165,7 @@ export const generateHeatmapChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_heatmap_chart",
     );
   },

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { generateChartImage } from "../utils";
 import {
   HeightSchema,
+  OutputTypeSchema,
   ThemeSchema,
   TitleSchema,
   WidthSchema,
@@ -42,6 +43,7 @@ export const generateSunburstChartTool = {
     theme: ThemeSchema,
     title: TitleSchema,
     width: WidthSchema,
+    outputType: OutputTypeSchema,
   }),
   run: async (params: {
     data: Array<SunburstDataType>;
@@ -49,8 +51,9 @@ export const generateSunburstChartTool = {
     theme?: "default" | "dark";
     title?: string;
     width: number;
+    outputType?: "png" | "svg" | "option";
   }) => {
-    const { data, height, theme, title, width } = params;
+    const { data, height, theme, title, width, outputType } = params;
 
     const series: Array<SeriesOption> = [
       {
@@ -124,7 +127,7 @@ export const generateSunburstChartTool = {
       width,
       height,
       theme,
-      "png",
+      outputType,
       "generate_sunburst_chart",
     );
   },
