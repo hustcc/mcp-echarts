@@ -114,6 +114,7 @@ export const generateCandlestickChartTool = {
         xAxisIndex: 1,
         yAxisIndex: 1,
         data: volumeData,
+        barWidth: "60%",
         itemStyle: {
           color: (params: { dataIndex: number }) => {
             const dataIndex = params.dataIndex;
@@ -148,11 +149,11 @@ export const generateCandlestickChartTool = {
         {
           type: "category",
           data: dates,
-          boundaryGap: false,
+          boundaryGap: true,
           axisLine: { onZero: false },
           splitLine: { show: false },
-          min: "dataMin",
-          max: "dataMax",
+          min: -0.2,
+          max: dates.length - 0.8,
         },
         ...(showVolume
           ? [
@@ -160,13 +161,13 @@ export const generateCandlestickChartTool = {
                 type: "category" as const,
                 gridIndex: 1,
                 data: dates,
-                boundaryGap: false,
+                boundaryGap: true,
                 axisLine: { onZero: false },
                 axisTick: { show: false },
                 splitLine: { show: false },
                 axisLabel: { show: false },
-                min: "dataMin" as const,
-                max: "dataMax" as const,
+                min: -0.2,
+                max: dates.length - 0.8,
               },
             ]
           : []),
@@ -188,6 +189,7 @@ export const generateCandlestickChartTool = {
                 axisLine: { show: false },
                 axisTick: { show: false },
                 splitLine: { show: false },
+                min: 0,
               },
             ]
           : []),
@@ -195,22 +197,22 @@ export const generateCandlestickChartTool = {
       grid: showVolume
         ? [
             {
-              left: "10%",
-              right: "8%",
+              left: "12%",
+              right: "10%",
               top: "15%",
               height: "50%",
             },
             {
-              left: "10%",
-              right: "8%",
+              left: "12%",
+              right: "10%",
               top: "75%",
               height: "15%",
             },
           ]
         : [
             {
-              left: "10%",
-              right: "8%",
+              left: "12%",
+              right: "10%",
               top: "15%",
               bottom: "15%",
             },

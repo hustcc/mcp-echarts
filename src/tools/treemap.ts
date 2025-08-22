@@ -61,25 +61,12 @@ export const generateTreemapChartTool = {
         data: data,
         left: "3%",
         right: "3%",
-        top: "5%",
         bottom: "3%",
-        leafDepth: 2,
         label: {
           show: true,
           formatter: "{b}",
           fontSize: 12,
           color: "#fff",
-        },
-        upperLabel: {
-          show: true,
-          height: 30,
-          color: "#fff",
-          fontSize: 14,
-        },
-        itemStyle: {
-          borderColor: "#fff",
-          borderWidth: 1,
-          gapWidth: 1,
         },
         emphasis: {
           focus: "descendant",
@@ -95,20 +82,6 @@ export const generateTreemapChartTool = {
         },
         roam: false,
         nodeClick: "zoomToNode",
-        levels: [
-          {
-            itemStyle: {
-              borderWidth: 0,
-              gapWidth: 5,
-            },
-          },
-          {
-            itemStyle: {
-              gapWidth: 1,
-              borderColorSaturation: 0.6,
-            },
-          },
-        ],
       },
     ];
 
