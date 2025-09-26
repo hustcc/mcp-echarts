@@ -31,7 +31,6 @@ export const generateAreaChartTool = {
     axisYTitle?: string;
     data: Array<{ time: string; value: number; group?: string }>;
     height: number;
-    showArea?: boolean;
     showSymbol?: boolean;
     smooth?: boolean;
     stack?: boolean;
