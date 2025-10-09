@@ -82,7 +82,14 @@ export async function storeBufferToMinIO(
     const protocol = useSSL ? "https" : "http";
     const endPoint = process.env.MINIO_ENDPOINT || "localhost";
     const port = process.env.MINIO_PORT || "9000";
-    const url = `${protocol}://${endPoint}:${port}/${BUCKET_NAME}/${objectName}`;
+
+    // Fix for issue #28: Don't include standard ports in URL to support Nginx reverse proxy
+    const isStandardPort =
+      (protocol === "https" && port === "443") ||
+      (protocol === "http" && port === "80");
+    const url = isStandardPort
+      ? `${protocol}://${endPoint}/${BUCKET_NAME}/${objectName}`
+      : `${protocol}://${endPoint}:${port}/${BUCKET_NAME}/${objectName}`;
 
     return url;
   } catch (error) {
