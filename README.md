@@ -2,12 +2,12 @@
 
 Generate <img src="https://echarts.apache.org/zh/images/favicon.png" height="14"/> [Apache ECharts](https://echarts.apache.org/) with AI MCP dynamically for chart generation and data analysis. _Also you can use <img src="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*ZFK8SrovcqgAAAAAAAAAAAAAemJ7AQ/original" height="14"/> [mcp-server-chart](https://github.com/antvis/mcp-server-chart) to generate chart, graph, map._
 
-<a href="https://glama.ai/mcp/servers/@hustcc/mcp-echarts">
-  <img width="380" height="200" src="https://glama.ai/mcp/servers/@hustcc/mcp-echarts/badge" alt="ECharts MCP server" />
-</a>
-
 <div align="center">
   <img width="648" alt="mcp-echarts" src="https://mdn.alipayobjects.com/huamei_1gdzij/afts/img/A*s3w3SpMMPDQAAAAARzAAAAgAemB7AQ/original" />
+</div>
+
+<div align="center">
+  <img width="648" alt="award" src="https://github.com/user-attachments/assets/962ab78f-387d-412d-81e3-13981328082d" />
 </div>
 
 ## ✨ Features
