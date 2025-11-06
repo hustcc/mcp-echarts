@@ -11,9 +11,9 @@ describe("tools index", () => {
    * Tool count validation
    * Validates that the total number of exported tools meets expectations (17 chart tools)
    */
-  it("should export all 17 chart tools", () => {
+  it("should export all 18 chart tools", () => {
     // Validate that the tools array contains 17 chart tools
-    expect(tools).toHaveLength(17);
+    expect(tools).toHaveLength(18);
   });
 
   /**
@@ -74,6 +74,7 @@ describe("tools index", () => {
       "generate_graph_chart", // Graph chart
       "generate_parallel_chart", // Parallel coordinates chart
       "generate_tree_chart", // Tree chart
+      "generate_area_chart", // Area chart
     ];
 
     // Get actual tool names and sort them

@@ -1,3 +1,4 @@
+import { generateAreaChartTool } from "./area";
 import { generateBarChartTool } from "./bar";
 import { generateBoxplotChartTool } from "./boxplot";
 import { generateCandlestickChartTool } from "./candlestick";
@@ -18,6 +19,7 @@ import { generateTreemapChartTool } from "./treemap";
 
 export const tools = [
   generateEChartsTool,
+  generateAreaChartTool,
   generateLineChartTool,
   generateBarChartTool,
   generatePieChartTool,
@@ -39,6 +41,7 @@ export const tools = [
 // Re-export individual tools for convenient use in tests and other places
 export {
   generateEChartsTool,
+  generateAreaChartTool,
   generateLineChartTool,
   generateBarChartTool,
   generatePieChartTool,

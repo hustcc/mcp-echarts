@@ -291,7 +291,7 @@ describe("integration tests", () => {
 
     it("should have all tools properly exported", () => {
       // Verify that the total number of tools is correct
-      expect(tools).toHaveLength(17);
+      expect(tools).toHaveLength(18);
 
       // Define the expected list of tool names
       const expectedToolNames = [
@@ -312,6 +312,7 @@ describe("integration tests", () => {
         "generate_graph_chart",
         "generate_parallel_chart",
         "generate_tree_chart",
+        "generate_area_chart",
       ];
 
       // Verify that the actual exported tool names match expectations
