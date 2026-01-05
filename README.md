@@ -109,7 +109,7 @@ For better performance and sharing capabilities, you can configure MinIO object 
 
 We can Integrate with `MinIO` object storage providers below.
 
- - [MinIO](https://min.io/): High-performance, S3-compatible object storage. Use [MinIO JavaScript Client](https://min.io/docs/minio/linux/developers/javascript/minio-javascript.html) for direct integration.
+ - [MinIO](https://min.io/): High-performance, S3-compatible object storage. Use [MinIO JavaScript Client](https://docs.min.io/enterprise/aistor-object-store/developers/sdk/javascript/) for direct integration.
  - [Amazon S3](https://aws.amazon.com/s3/): Use [AWS SDK](https://aws.amazon.com/sdk-for-javascript/) with compatible API endpoint.
  - [Alibaba Cloud OSS](https://www.alibabacloud.com/product/object-storage-service): Use the [Alibaba Cloud SDK](https://www.alibabacloud.com/help/en/sdk) for OSS services.
  - [Google Cloud Storage](https://cloud.google.com/storage): Integrate using [Google Cloud SDK](https://cloud.google.com/sdk) or compatible API.
