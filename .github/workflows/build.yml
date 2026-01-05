@@ -20,6 +20,8 @@ jobs:
           node-version: '20'
 
       - name: Run Continuous Integration
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: |
           npm install
           npm run build
