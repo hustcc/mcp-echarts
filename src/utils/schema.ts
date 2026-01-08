@@ -49,9 +49,9 @@ export const WidthSchema = z
   .describe("Set the width of the chart, default is 800px.");
 
 // TODO: use zod v4 JSON to schema to replace zod-to-json-schema when v4 is stable
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const zodToJsonSchema = (schema: z.ZodType<any>) => {
-  return zodToJsonSchemaOriginal(schema, {
+export const zodToJsonSchema = (schema: unknown): Record<string, unknown> => {
+  // biome-ignore lint/suspicious/noExplicitAny: Type assertion needed to avoid TypeScript deep type instantiation
+  return zodToJsonSchemaOriginal(schema as any, {
     rejectedAdditionalProperties: undefined,
   });
 };
