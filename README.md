@@ -2,12 +2,12 @@
 
 Generate <img src="https://echarts.apache.org/zh/images/favicon.png" height="14"/> [Apache ECharts](https://echarts.apache.org/) with AI MCP dynamically for chart generation and data analysis. _Also you can use <img src="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*ZFK8SrovcqgAAAAAAAAAAAAAemJ7AQ/original" height="14"/> [mcp-server-chart](https://github.com/antvis/mcp-server-chart) to generate chart, graph, map._
 
-<a href="https://glama.ai/mcp/servers/@hustcc/mcp-echarts">
-  <img width="380" height="200" src="https://glama.ai/mcp/servers/@hustcc/mcp-echarts/badge" alt="ECharts MCP server" />
-</a>
-
 <div align="center">
   <img width="648" alt="mcp-echarts" src="https://mdn.alipayobjects.com/huamei_1gdzij/afts/img/A*s3w3SpMMPDQAAAAARzAAAAgAemB7AQ/original" />
+</div>
+
+<div align="center">
+  <img width="648" alt="award" src="https://github.com/user-attachments/assets/962ab78f-387d-412d-81e3-13981328082d" />
 </div>
 
 ## ✨ Features
@@ -20,6 +20,10 @@ Generate <img src="https://echarts.apache.org/zh/images/favicon.png" height="14"
 
 
 ## 🤖 Usage
+
+### Prerequisites
+
+- Node.js 18 or higher is required.
 
 ### Desktop Applications (stdio transport)
 
@@ -109,7 +113,7 @@ For better performance and sharing capabilities, you can configure MinIO object 
 
 We can Integrate with `MinIO` object storage providers below.
 
- - [MinIO](https://min.io/): High-performance, S3-compatible object storage. Use [MinIO JavaScript Client](https://min.io/docs/minio/linux/developers/javascript/minio-javascript.html) for direct integration.
+ - [MinIO](https://min.io/): High-performance, S3-compatible object storage. Use [MinIO JavaScript Client](https://docs.min.io/enterprise/aistor-object-store/developers/sdk/javascript/) for direct integration.
  - [Amazon S3](https://aws.amazon.com/s3/): Use [AWS SDK](https://aws.amazon.com/sdk-for-javascript/) with compatible API endpoint.
  - [Alibaba Cloud OSS](https://www.alibabacloud.com/product/object-storage-service): Use the [Alibaba Cloud SDK](https://www.alibabacloud.com/help/en/sdk) for OSS services.
  - [Google Cloud Storage](https://cloud.google.com/storage): Integrate using [Google Cloud SDK](https://cloud.google.com/sdk) or compatible API.

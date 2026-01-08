@@ -28,7 +28,7 @@ function createEChartsServer(): McpServer {
   for (const tool of tools) {
     const { name, description, inputSchema, run } = tool;
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    server.tool(name, description, inputSchema.shape, run as any);
+    server.tool(name, description, inputSchema.shape as any, run as any);
   }
 
   return server;
@@ -91,6 +91,13 @@ async function main(): Promise<void> {
   }
 }
 
+// Add health check endpoint to app
+function addHealthCheck(app: express.Express): void {
+  app.get("/health", (_, res) =>
+    res.json({ status: "healthy", service: "mcp-echarts" }),
+  );
+}
+
 async function runStdioServer(): Promise<void> {
   const server = createEChartsServer();
   const transport = new StdioServerTransport();
@@ -127,6 +134,8 @@ async function runSSEServer(port: number, endpoint: string): Promise<void> {
       res.status(400).send("No transport found for sessionId");
     }
   });
+  // Health check endpoint for SSE
+  addHealthCheck(app);
 
   app.listen(port, () => {
     console.log(
@@ -211,6 +220,8 @@ async function runStreamableHTTPServer(
     const transport = transports[sessionId];
     await transport.handleRequest(req, res);
   });
+  // Health check point for Streamable HTTP
+  addHealthCheck(app);
 
   app.listen(port, () => {
     console.log(
