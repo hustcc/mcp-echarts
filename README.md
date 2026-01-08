@@ -21,6 +21,10 @@ Generate <img src="https://echarts.apache.org/zh/images/favicon.png" height="14"
 
 ## 🤖 Usage
 
+### Prerequisites
+
+- Node.js 18 or higher is required.
+
 ### Desktop Applications (stdio transport)
 
 To use with `Desktop APP`, such as Claude, VSCode, Cline, Cherry Studio, and so on, add the  MCP server config below. On Mac system:
