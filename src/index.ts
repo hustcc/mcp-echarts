@@ -28,7 +28,7 @@ function createEChartsServer(): McpServer {
   for (const tool of tools) {
     const { name, description, inputSchema, run } = tool;
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    server.tool(name, description, inputSchema.shape, run as any);
+    server.tool(name, description, inputSchema.shape as any, run as any);
   }
 
   return server;
