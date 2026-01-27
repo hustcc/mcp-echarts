@@ -7,6 +7,7 @@ import {
   ThemeSchema,
   TitleSchema,
   WidthSchema,
+  createHierarchicalSchema,
 } from "../utils/schema";
 
 // Treemap data type
@@ -16,56 +17,13 @@ type TreemapDataType = {
   children?: TreemapDataType[];
 };
 
-// Define schema for hierarchical data with explicit nesting to avoid unresolvable $ref
-// We define the schema inline up to a reasonable depth (5 levels) to ensure compatibility
-// with strict JSON Schema clients like PydanticAI that don't support relative $ref paths
-
-// Level 5 (deepest) - no children
-const TreemapNodeLevel5 = z.object({
-  name: z.string().describe("Node name, such as 'Design'."),
-  value: z.number().describe("Node value, such as 70."),
-});
-
-// Level 4
-const TreemapNodeLevel4 = z.object({
-  name: z.string().describe("Node name, such as 'Design'."),
-  value: z.number().describe("Node value, such as 70."),
-  children: z
-    .array(TreemapNodeLevel5)
-    .optional()
-    .describe("Child nodes for hierarchical structure."),
-});
-
-// Level 3
-const TreemapNodeLevel3 = z.object({
-  name: z.string().describe("Node name, such as 'Design'."),
-  value: z.number().describe("Node value, such as 70."),
-  children: z
-    .array(TreemapNodeLevel4)
-    .optional()
-    .describe("Child nodes for hierarchical structure."),
-});
-
-// Level 2
-const TreemapNodeLevel2 = z.object({
-  name: z.string().describe("Node name, such as 'Design'."),
-  value: z.number().describe("Node value, such as 70."),
-  children: z
-    .array(TreemapNodeLevel3)
-    .optional()
-    .describe("Child nodes for hierarchical structure."),
-});
-
-// Level 1
-const TreeNodeSchema = z.object({
-  name: z.string().describe("Node name, such as 'Design'."),
-  value: z.number().describe("Node value, such as 70."),
-  children: z
-    .array(TreemapNodeLevel2)
-    .optional()
-    .describe("Child nodes for hierarchical structure."),
+// Create hierarchical schema using the reusable helper
+const TreeNodeSchema = createHierarchicalSchema(
+  "Node name, such as 'Design'.",
+  "Node value, such as 70.",
+  false, // value is required for treemap
   // biome-ignore lint/suspicious/noExplicitAny: Zod type inference requires any for recursive type compatibility
-}) satisfies z.ZodType<TreemapDataType, any, any>;
+) satisfies z.ZodType<TreemapDataType, any, any>;
 
 export const generateTreemapChartTool = {
   name: "generate_treemap_chart",

@@ -55,3 +55,47 @@ export const zodToJsonSchema = (schema: unknown): Record<string, unknown> => {
     rejectedAdditionalProperties: undefined,
   });
 };
+
+/**
+ * Creates a hierarchical schema with explicit nesting to avoid unresolvable $ref.
+ * This helper generates nested schemas up to the specified depth to ensure compatibility
+ * with strict JSON Schema clients like PydanticAI that don't support relative $ref paths.
+ *
+ * @param nameDesc - Description for the name field
+ * @param valueDesc - Description for the value field
+ * @param valueOptional - Whether the value field is optional
+ * @param depth - Maximum nesting depth (default: 5)
+ * @returns A Zod schema with explicit nesting
+ */
+export function createHierarchicalSchema(
+  nameDesc: string,
+  valueDesc: string,
+  valueOptional: boolean,
+  depth = 5,
+  // biome-ignore lint/suspicious/noExplicitAny: This helper needs to return flexible types for different use cases
+): any {
+  // Build from deepest level up
+  let currentLevel = z.object({
+    name: z.string().describe(nameDesc),
+    value: valueOptional
+      ? z.number().optional().describe(valueDesc)
+      : z.number().describe(valueDesc),
+  });
+
+  // Build each level from depth to 1
+  for (let i = depth - 1; i >= 1; i--) {
+    const childLevel = currentLevel;
+    currentLevel = z.object({
+      name: z.string().describe(nameDesc),
+      value: valueOptional
+        ? z.number().optional().describe(valueDesc)
+        : z.number().describe(valueDesc),
+      children: z
+        .array(childLevel)
+        .optional()
+        .describe("Child nodes for hierarchical structure."),
+    }) as typeof currentLevel;
+  }
+
+  return currentLevel;
+}

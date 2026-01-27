@@ -7,6 +7,7 @@ import {
   ThemeSchema,
   TitleSchema,
   WidthSchema,
+  createHierarchicalSchema,
 } from "../utils/schema";
 
 // Sunburst data type
@@ -16,56 +17,13 @@ type SunburstDataType = {
   children?: SunburstDataType[];
 };
 
-// Define schema for hierarchical data with explicit nesting to avoid unresolvable $ref
-// We define the schema inline up to a reasonable depth (5 levels) to ensure compatibility
-// with strict JSON Schema clients like PydanticAI that don't support relative $ref paths
-
-// Level 5 (deepest) - no children
-const SunburstNodeLevel5 = z.object({
-  name: z.string().describe("Node name, such as 'Technology'."),
-  value: z.number().describe("Node value, such as 100."),
-});
-
-// Level 4
-const SunburstNodeLevel4 = z.object({
-  name: z.string().describe("Node name, such as 'Technology'."),
-  value: z.number().describe("Node value, such as 100."),
-  children: z
-    .array(SunburstNodeLevel5)
-    .optional()
-    .describe("Child nodes for hierarchical structure."),
-});
-
-// Level 3
-const SunburstNodeLevel3 = z.object({
-  name: z.string().describe("Node name, such as 'Technology'."),
-  value: z.number().describe("Node value, such as 100."),
-  children: z
-    .array(SunburstNodeLevel4)
-    .optional()
-    .describe("Child nodes for hierarchical structure."),
-});
-
-// Level 2
-const SunburstNodeLevel2 = z.object({
-  name: z.string().describe("Node name, such as 'Technology'."),
-  value: z.number().describe("Node value, such as 100."),
-  children: z
-    .array(SunburstNodeLevel3)
-    .optional()
-    .describe("Child nodes for hierarchical structure."),
-});
-
-// Level 1
-const SunburstNodeSchema = z.object({
-  name: z.string().describe("Node name, such as 'Technology'."),
-  value: z.number().describe("Node value, such as 100."),
-  children: z
-    .array(SunburstNodeLevel2)
-    .optional()
-    .describe("Child nodes for hierarchical structure."),
+// Create hierarchical schema using the reusable helper
+const SunburstNodeSchema = createHierarchicalSchema(
+  "Node name, such as 'Technology'.",
+  "Node value, such as 100.",
+  false, // value is required for sunburst
   // biome-ignore lint/suspicious/noExplicitAny: Zod type inference requires any for recursive type compatibility
-}) satisfies z.ZodType<SunburstDataType, any, any>;
+) satisfies z.ZodType<SunburstDataType, any, any>;
 
 export const generateSunburstChartTool = {
   name: "generate_sunburst_chart",
