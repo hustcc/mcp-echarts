@@ -16,17 +16,56 @@ type TreeDataType = {
   children?: TreeDataType[];
 };
 
-// Define recursive schema for hierarchical data
-const TreeNodeSchema: z.ZodType<TreeDataType> = z.lazy(() =>
-  z.object({
-    name: z.string().describe("Node name, such as 'Root'."),
-    value: z.number().optional().describe("Node value (optional)."),
-    children: z
-      .array(TreeNodeSchema)
-      .optional()
-      .describe("Child nodes for hierarchical structure."),
-  }),
-);
+// Define schema for hierarchical data with explicit nesting to avoid unresolvable $ref
+// We define the schema inline up to a reasonable depth (5 levels) to ensure compatibility
+// with strict JSON Schema clients like PydanticAI that don't support relative $ref paths
+
+// Level 5 (deepest) - no children
+const TreeNodeLevel5 = z.object({
+  name: z.string().describe("Node name, such as 'Root'."),
+  value: z.number().optional().describe("Node value (optional)."),
+});
+
+// Level 4
+const TreeNodeLevel4 = z.object({
+  name: z.string().describe("Node name, such as 'Root'."),
+  value: z.number().optional().describe("Node value (optional)."),
+  children: z
+    .array(TreeNodeLevel5)
+    .optional()
+    .describe("Child nodes for hierarchical structure."),
+});
+
+// Level 3
+const TreeNodeLevel3 = z.object({
+  name: z.string().describe("Node name, such as 'Root'."),
+  value: z.number().optional().describe("Node value (optional)."),
+  children: z
+    .array(TreeNodeLevel4)
+    .optional()
+    .describe("Child nodes for hierarchical structure."),
+});
+
+// Level 2
+const TreeNodeLevel2 = z.object({
+  name: z.string().describe("Node name, such as 'Root'."),
+  value: z.number().optional().describe("Node value (optional)."),
+  children: z
+    .array(TreeNodeLevel3)
+    .optional()
+    .describe("Child nodes for hierarchical structure."),
+});
+
+// Level 1 (root)
+const TreeNodeSchema = z.object({
+  name: z.string().describe("Node name, such as 'Root'."),
+  value: z.number().optional().describe("Node value (optional)."),
+  children: z
+    .array(TreeNodeLevel2)
+    .optional()
+    .describe("Child nodes for hierarchical structure."),
+  // biome-ignore lint/suspicious/noExplicitAny: Zod type inference requires any for recursive type compatibility
+}) satisfies z.ZodType<TreeDataType, any, any>;
 
 export const generateTreeChartTool = {
   name: "generate_tree_chart",

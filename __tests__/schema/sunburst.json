@@ -20,7 +20,72 @@
             "children": {
               "type": "array",
               "items": {
-                "$ref": "#/properties/data/items"
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Node name, such as 'Technology'."
+                  },
+                  "value": {
+                    "type": "number",
+                    "description": "Node value, such as 100."
+                  },
+                  "children": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Node name, such as 'Technology'."
+                        },
+                        "value": {
+                          "type": "number",
+                          "description": "Node value, such as 100."
+                        },
+                        "children": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Node name, such as 'Technology'."
+                              },
+                              "value": {
+                                "type": "number",
+                                "description": "Node value, such as 100."
+                              },
+                              "children": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string",
+                                      "description": "Node name, such as 'Technology'."
+                                    },
+                                    "value": {
+                                      "type": "number",
+                                      "description": "Node value, such as 100."
+                                    }
+                                  },
+                                  "required": ["name", "value"]
+                                },
+                                "description": "Child nodes for hierarchical structure."
+                              }
+                            },
+                            "required": ["name", "value"]
+                          },
+                          "description": "Child nodes for hierarchical structure."
+                        }
+                      },
+                      "required": ["name", "value"]
+                    },
+                    "description": "Child nodes for hierarchical structure."
+                  }
+                },
+                "required": ["name", "value"]
               },
               "description": "Child nodes for hierarchical structure."
             }
