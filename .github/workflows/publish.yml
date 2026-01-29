@@ -1,0 +1,75 @@
+name: Publish to NPM
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Trigger on semantic version tags like v1.0.0, v0.8.0, etc.
+
+jobs:
+  validate-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate semantic version tag
+        id: validate
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "Tag name: $TAG_NAME"
+          
+          # Validate semantic versioning format (vX.Y.Z)
+          if [[ ! "$TAG_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: Tag '$TAG_NAME' does not follow semantic versioning format (vX.Y.Z)"
+            exit 1
+          fi
+          
+          # Extract version without 'v' prefix
+          VERSION=${TAG_NAME#v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+          # Check if tag version matches package.json version
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          echo "Package.json version: $PACKAGE_VERSION"
+          
+          if [ "$VERSION" != "$PACKAGE_VERSION" ]; then
+            echo "Error: Tag version ($VERSION) does not match package.json version ($PACKAGE_VERSION)"
+            exit 1
+          fi
+          
+          echo "✓ Semantic version validation passed"
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Run tests
+        run: npx vitest --watch=false
+
+      - name: Publish to NPM
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ steps.validate.outputs.version }}
+          body: |
+            Release version ${{ steps.validate.outputs.version }}
+            
+            Published to npm: https://www.npmjs.com/package/mcp-echarts/v/${{ steps.validate.outputs.version }}
+          draft: false
+          prerelease: false
