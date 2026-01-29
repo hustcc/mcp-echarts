@@ -7,6 +7,7 @@ import {
   ThemeSchema,
   TitleSchema,
   WidthSchema,
+  createHierarchicalSchema,
 } from "../utils/schema";
 
 // Tree data type
@@ -16,17 +17,13 @@ type TreeDataType = {
   children?: TreeDataType[];
 };
 
-// Define recursive schema for hierarchical data
-const TreeNodeSchema: z.ZodType<TreeDataType> = z.lazy(() =>
-  z.object({
-    name: z.string().describe("Node name, such as 'Root'."),
-    value: z.number().optional().describe("Node value (optional)."),
-    children: z
-      .array(TreeNodeSchema)
-      .optional()
-      .describe("Child nodes for hierarchical structure."),
-  }),
-);
+// Create hierarchical schema using the reusable helper
+const TreeNodeSchema = createHierarchicalSchema(
+  "Node name, such as 'Root'.",
+  "Node value (optional).",
+  true, // value is optional for tree
+  // biome-ignore lint/suspicious/noExplicitAny: Zod type inference requires any for recursive type compatibility
+) satisfies z.ZodType<TreeDataType, any, any>;
 
 export const generateTreeChartTool = {
   name: "generate_tree_chart",

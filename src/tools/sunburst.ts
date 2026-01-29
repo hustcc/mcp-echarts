@@ -7,6 +7,7 @@ import {
   ThemeSchema,
   TitleSchema,
   WidthSchema,
+  createHierarchicalSchema,
 } from "../utils/schema";
 
 // Sunburst data type
@@ -16,17 +17,13 @@ type SunburstDataType = {
   children?: SunburstDataType[];
 };
 
-// Define recursive schema for hierarchical data
-const SunburstNodeSchema: z.ZodType<SunburstDataType> = z.lazy(() =>
-  z.object({
-    name: z.string().describe("Node name, such as 'Technology'."),
-    value: z.number().describe("Node value, such as 100."),
-    children: z
-      .array(SunburstNodeSchema)
-      .optional()
-      .describe("Child nodes for hierarchical structure."),
-  }),
-);
+// Create hierarchical schema using the reusable helper
+const SunburstNodeSchema = createHierarchicalSchema(
+  "Node name, such as 'Technology'.",
+  "Node value, such as 100.",
+  false, // value is required for sunburst
+  // biome-ignore lint/suspicious/noExplicitAny: Zod type inference requires any for recursive type compatibility
+) satisfies z.ZodType<SunburstDataType, any, any>;
 
 export const generateSunburstChartTool = {
   name: "generate_sunburst_chart",

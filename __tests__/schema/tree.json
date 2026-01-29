@@ -31,7 +31,54 @@
                 "children": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/properties/data/properties/children/items"
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Node name, such as 'Root'."
+                      },
+                      "value": {
+                        "type": "number",
+                        "description": "Node value (optional)."
+                      },
+                      "children": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "description": "Node name, such as 'Root'."
+                            },
+                            "value": {
+                              "type": "number",
+                              "description": "Node value (optional)."
+                            },
+                            "children": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "description": "Node name, such as 'Root'."
+                                  },
+                                  "value": {
+                                    "type": "number",
+                                    "description": "Node value (optional)."
+                                  }
+                                },
+                                "required": ["name"]
+                              },
+                              "description": "Child nodes for hierarchical structure."
+                            }
+                          },
+                          "required": ["name"]
+                        },
+                        "description": "Child nodes for hierarchical structure."
+                      }
+                    },
+                    "required": ["name"]
                   },
                   "description": "Child nodes for hierarchical structure."
                 }
