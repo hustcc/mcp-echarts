@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*.*.*'  # Trigger on semantic version tags like v1.0.0, v0.8.0, etc.
 
+permissions:
+  contents: write  # Required for creating releases
+  id-token: write  # Required for npm provenance
+
 jobs:
   validate-and-publish:
     runs-on: ubuntu-latest
@@ -12,6 +16,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Validate semantic version tag
         id: validate
@@ -40,17 +50,8 @@ jobs:
           
           echo "✓ Semantic version validation passed"
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-
       - name: Install dependencies
         run: npm ci
-
-      - name: Build
-        run: npm run build
 
       - name: Run tests
         run: npx vitest --watch=false
@@ -61,15 +62,12 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ steps.validate.outputs.version }}
+          name: Release ${{ steps.validate.outputs.version }}
           body: |
             Release version ${{ steps.validate.outputs.version }}
             
-            Published to npm: https://www.npmjs.com/package/mcp-echarts/v/${{ steps.validate.outputs.version }}
+            📦 Published to npm: https://www.npmjs.com/package/mcp-echarts/v/${{ steps.validate.outputs.version }}
           draft: false
           prerelease: false
