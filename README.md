@@ -182,3 +182,8 @@ npm run start
 ## 📄 License
 
 MIT@[hustcc](https://github.com/hustcc).
+
+## Hosted deployment
+
+A hosted deployment is available on [Fronteir AI](https://fronteir.ai/mcp/hustcc-mcp-echarts).
+
