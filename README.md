@@ -61,7 +61,7 @@ On Window system:
 }
 ```
 
-Also, you can use it on [modelscope](https://www.modelscope.cn/mcp/servers/hustcc/MCP-ECharts), [glama.ai](https://glama.ai/mcp/servers/@hustcc/mcp-echarts), [smithery.ai](https://smithery.ai/server/@hustcc/mcp-echarts) or others with HTTP, SSE Protocol.
+Also, you can use it on [modelscope](https://www.modelscope.cn/mcp/servers/hustcc/MCP-ECharts), [glama.ai](https://glama.ai/mcp/servers/@hustcc/mcp-echarts), [skillselion.com](https://skillselion.com/mcp/tool/io.github.hustcc/mcp-echarts) or others with HTTP, SSE Protocol.
 
 
 ## 🚰 Run with SSE or Streamable transport
