@@ -1,4 +1,4 @@
-# <img src="https://echarts.apache.org/zh/images/favicon.png" height="24"/> MCP ECharts ![](https://badge.mcpx.dev?type=server 'MCP Server')  [![build](https://github.com/hustcc/mcp-echarts/actions/workflows/build.yml/badge.svg)](https://github.com/hustcc/mcp-echarts/actions/workflows/build.yml) [![npm Version](https://img.shields.io/npm/v/mcp-echarts.svg)](https://www.npmjs.com/package/mcp-echarts) [![smithery badge](https://smithery.ai/badge/@hustcc/mcp-echarts)](https://smithery.ai/server/@hustcc/mcp-echarts) [![npm License](https://img.shields.io/npm/l/mcp-echarts.svg)](https://www.npmjs.com/package/mcp-echarts) [![Trust Score](https://archestra.ai/mcp-catalog/api/badge/quality/hustcc/mcp-echarts)](https://archestra.ai/mcp-catalog/hustcc__mcp-echarts)
+# <img src="https://echarts.apache.org/zh/images/favicon.png" height="24"/> MCP ECharts ![](https://badge.mcpx.dev?type=server 'MCP Server')  [![build](https://github.com/hustcc/mcp-echarts/actions/workflows/build.yml/badge.svg)](https://github.com/hustcc/mcp-echarts/actions/workflows/build.yml) [![npm Version](https://img.shields.io/npm/v/mcp-echarts.svg)](https://www.npmjs.com/package/mcp-echarts) [![Listed on Skillselion](https://skillselion.com/badge/mcp/tool/io.github.hustcc/mcp-echarts.svg)](https://skillselion.com/mcp/tool/io.github.hustcc/mcp-echarts) [![npm License](https://img.shields.io/npm/l/mcp-echarts.svg)](https://www.npmjs.com/package/mcp-echarts) [![Trust Score](https://archestra.ai/mcp-catalog/api/badge/quality/hustcc/mcp-echarts)](https://archestra.ai/mcp-catalog/hustcc__mcp-echarts)
 
 Generate <img src="https://echarts.apache.org/zh/images/favicon.png" height="14"/> [Apache ECharts](https://echarts.apache.org/) with AI MCP dynamically for chart generation and data analysis. _Also you can use <img src="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*ZFK8SrovcqgAAAAAAAAAAAAAemJ7AQ/original" height="14"/> [mcp-server-chart](https://github.com/antvis/mcp-server-chart) to generate chart, graph, map._
 
@@ -61,7 +61,7 @@ On Window system:
 }
 ```
 
-Also, you can use it on [modelscope](https://www.modelscope.cn/mcp/servers/hustcc/MCP-ECharts), [glama.ai](https://glama.ai/mcp/servers/@hustcc/mcp-echarts), [smithery.ai](https://smithery.ai/server/@hustcc/mcp-echarts) or others with HTTP, SSE Protocol.
+Also, you can use it on [modelscope](https://www.modelscope.cn/mcp/servers/hustcc/MCP-ECharts), [glama.ai](https://glama.ai/mcp/servers/@hustcc/mcp-echarts), [skillselion.com](https://skillselion.com/mcp/tool/io.github.hustcc/mcp-echarts) or others with HTTP, SSE Protocol.
 
 
 ## 🚰 Run with SSE or Streamable transport
